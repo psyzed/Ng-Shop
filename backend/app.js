@@ -2,6 +2,8 @@ const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const authJwt = require("./middlewares/jwt.middleware");
+const errorHandler = require("./middlewares/error-handling.middleware");
 
 const app = express();
 app.use(cors());
@@ -18,6 +20,8 @@ const usersRoutes = require("./routes/users.routes");
 //Middlewares
 app.use(express.json());
 app.use(morgan("tiny"));
+app.use(authJwt());
+app.use(errorHandler);
 
 //Routers
 app.use(`${api}/products`, productRoutes);

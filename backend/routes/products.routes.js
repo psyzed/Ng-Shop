@@ -10,10 +10,12 @@ router.get("/", async (req, res) => {
   if (req.query.categories) {
     queryParams = { category: req.query.categories.split(",") };
   }
-  const productList = await Product.find(queryParams).select("name category id");
+  const productList = await Product.find(queryParams).select(
+    "name category id"
+  );
 
   if (!productList) {
-    res.status(500).json({ success: false });
+    res.status(500).send({ success: false });
   }
 
   res.send(productList);
@@ -23,7 +25,7 @@ router.get("/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id).populate("category");
     if (!product) {
-      res.status(404).json({
+      res.status(404).send({
         success: false,
         message: "Product with this id does not exist!",
       });
@@ -31,7 +33,7 @@ router.get("/:id", async (req, res) => {
       res.send(product);
     }
   } catch (error) {
-    return res.status(500).json({
+    return res.status(500).send({
       success: false,
       message: "Something went wrong, please try again later!",
     });
@@ -73,13 +75,13 @@ router.put("/:id", async (req, res) => {
   if (!mongoose.isValidObjectId(req.params.id))
     return res
       .status(404)
-      .json({ success: false, message: "The provided id is wrong!" });
+      .send({ success: false, message: "The provided id is wrong!" });
   try {
     const category = await Category.findById(req.body.category);
     if (!category)
       return res
         .status(404)
-        .json({ success: false, message: "Not valid Category" });
+        .send({ success: false, message: "Not valid Category" });
     const product = await Product.findByIdAndUpdate(
       req.params.id,
       {
@@ -99,7 +101,7 @@ router.put("/:id", async (req, res) => {
     );
 
     if (!product) {
-      res.status(404).json({
+      res.status(404).send({
         success: false,
         message: "The product with this id does not exist!",
       });
@@ -107,7 +109,7 @@ router.put("/:id", async (req, res) => {
       res.status(200).send(product);
     }
   } catch (error) {
-    return res.status(500).json({
+    return res.status(500).send({
       success: false,
       message: "Something went wrong, try again later!",
     });
@@ -120,14 +122,14 @@ router.delete("/:id", async (req, res) => {
     if (product) {
       return res
         .status(200)
-        .json({ success: true, message: "Product Deleted!" });
+        .send({ success: true, message: "Product Deleted!" });
     } else {
       return res
         .status(404)
-        .json({ success: false, message: "Product not found!" });
+        .send({ success: false, message: "Product not found!" });
     }
   } catch (error) {
-    return res.status(500).json({
+    return res.status(500).send({
       success: false,
       message: "Something went wrong, please try again later...",
     });
@@ -140,10 +142,10 @@ router.get("/get/count", async (req, res) => {
     if (totalProductCount) {
       return res
         .status(200)
-        .json({ success: true, totalProductCount: totalProductCount });
+        .send({ success: true, totalProductCount: totalProductCount });
     }
   } catch (error) {
-    return res.status(500).json({
+    return res.status(500).send({
       success: false,
       message: "Something went wrong, please try again later!",
     });
@@ -159,14 +161,14 @@ router.get("/get/featured/:count?", async (req, res) => {
     if (featuredProducts) {
       return res
         .status(200)
-        .json({ success: true, featuredProducts: featuredProducts });
+        .send({ success: true, featuredProducts: featuredProducts });
     } else {
       return res
         .status(404)
-        .json({ success: false, message: "There are no featured products!" });
+        .send({ success: false, message: "There are no featured products!" });
     }
   } catch (error) {
-    return res.status(500).json({
+    return res.status(500).send({
       success: false,
       message: "Something went wrong, please try later!",
     });
