@@ -4,12 +4,72 @@ const express = require("express");
 const router = express.Router();
 
 router.get(`/`, async (req, res) => {
-  const orderList = await Order.find();
+  const orderList = await Order.find()
+    .populate("user", "name")
+    .sort({ dateOrdered: -1 });
 
   if (!orderList) {
     res.status(500).send({ success: false });
   }
   res.send(orderList);
+});
+
+router.get(`/userorders/:userid`, async (req, res) => {
+  const userOrders = await Order.find({ user: req.params.userid })
+    .populate({
+      path: "orderItems",
+      populate: { path: "product", populate: "category" },
+    })
+    .sort({ dateOrdered: -1 });
+
+  if (!userOrders) {
+    res.status(500).send({ success: false });
+  }
+  res.send(userOrders);
+});
+
+router.get("/totalsales", async (req, res) => {
+  const totalSales = await Order.aggregate([
+    { $group: { _id: null, totalsales: { $sum: "$totalPrice" } } },
+  ]);
+
+  if (!totalSales) {
+    return res.status(400).send("The order sales cannot be generated");
+  }
+
+  res.send({ totalsales: totalSales.pop().totalsales });
+});
+
+router.get("/totalorders", async (req, res) => {
+  try {
+    const totalOrders = await Order.countDocuments();
+    if (totalOrders) {
+      res.status(200).send({ success: true, totalOrders: totalOrders });
+    } else {
+      res
+        .status(400)
+        .send({ success: false, message: "Unable to get order count!" });
+    }
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      message: "Something went wrong, please try again later.",
+    });
+  }
+});
+
+router.get(`/:id`, async (req, res) => {
+  const order = await Order.findById(req.params.id)
+    .populate("user", "name")
+    .populate({
+      path: "orderItems",
+      populate: { path: "product", populate: "category" },
+    });
+
+  if (!order) {
+    res.status(500).send({ success: false });
+  }
+  res.send({ success: true, order: order });
 });
 
 router.post("/", async (req, res) => {
@@ -27,7 +87,19 @@ router.post("/", async (req, res) => {
   );
 
   const orderItemsPromiseResolved = await orderItems;
-  console.log(orderItemsPromiseResolved);
+
+  const totalPrices = await Promise.all(
+    orderItemsPromiseResolved.map(async (orderItemId) => {
+      const orderItem = await OrderItem.findById(orderItemId).populate(
+        "product",
+        "price"
+      );
+      const totalPrice = orderItem.product.price * orderItem.quantity;
+      return totalPrice;
+    })
+  );
+
+  let totalPrice = totalPrices.reduce((a, b) => a + b, 0);
 
   let order = new Order({
     orderItems: orderItemsPromiseResolved,
@@ -38,11 +110,11 @@ router.post("/", async (req, res) => {
     country: req.body.country,
     phone: req.body.phone,
     status: req.body.status,
-    totalPrice: req.body.totalPrice,
+    totalPrice: totalPrice,
     user: req.body.user,
   });
 
-  // order = await order.save();
+  order = await order.save();
 
   if (!order) {
     return res
@@ -50,6 +122,54 @@ router.post("/", async (req, res) => {
       .send({ success: false, message: "Order could not be created!" });
   } else {
     return res.status(200).send({ success: true, order: order });
+  }
+});
+
+router.put("/:id", async (req, res) => {
+  let order = await Order.findByIdAndUpdate(
+    req.params.id,
+    {
+      status: req.body.status,
+    },
+    { new: true }
+  );
+
+  if (order) {
+    res
+      .status(200)
+      .send({ success: true, message: "Status updated!", order: order });
+  } else {
+    res.status(400).send({ success: false, message: "Something went wrong." });
+  }
+});
+
+router.delete("/:id", async (req, res) => {
+  try {
+    await Order.findByIdAndRemove(req.params.id).then(async (order) => {
+      if (order) {
+        await Promise.all(
+          order.orderItems.map((orderItemId) =>
+            OrderItem.findByIdAndRemove(orderItemId).then((orderItem) => {
+              if (!orderItem) {
+                console.log(`OrderItem ${orderItemId} not found`);
+              }
+            })
+          )
+        );
+        res.status(200).send({ success: true, message: "Order Deleted!" });
+      } else {
+        res
+          .status(404)
+          .send({ success: false, message: "Order does not exist" });
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Something went wrong, try again later.",
+      error: error,
+    });
   }
 });
 
