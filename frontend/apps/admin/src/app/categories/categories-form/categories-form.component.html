@@ -1,0 +1,64 @@
+<div class="admin-page">
+    <p-card header="Add Category" subheader="Add Or Edit Categories">
+        <div class="grid mb-5">
+            <div class="col-12">
+                <p-toolbar>
+                    <div class="toolbar-group-left"></div>
+                    <div class="toolbar-group-right">
+                        <p-button
+                            styleClass="p-button-primary mr-2"
+                            (onClick)="onSubmit()"
+                            label="Add"
+                            icon="pi pi-plus"
+                        ></p-button>
+                        <p-button
+                            styleClass="p-button-secondary"
+                            label="Cancel"
+                            icon="pi pi-arrow-circle-left"
+                        ></p-button>
+                    </div>
+                </p-toolbar>
+            </div>
+        </div>
+        <div class="grid">
+            <div class="col-12">
+                <form [formGroup]="newCategoryForm">
+                    <div class="formgrid grid">
+                        <div class="field col">
+                            <label for="name">Name</label>
+                            <input
+                                formControlName="name"
+                                type="text"
+                                class="w-full"
+                                pInputText
+                            />
+                            <small
+                                *ngIf="
+                                    categoryForm['name'].invalid && isSubmited
+                                "
+                                class="p-error"
+                                >Name is required</small
+                            >
+                        </div>
+                        <div class="field col">
+                            <label for="icon">Icon</label>
+                            <input
+                                formControlName="icon"
+                                type="text"
+                                class="w-full"
+                                pInputText
+                            />
+                            <small
+                                *ngIf="
+                                    categoryForm['icon'].invalid && isSubmited
+                                "
+                                class="p-error"
+                                >Icon is required</small
+                            >
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </p-card>
+</div>
