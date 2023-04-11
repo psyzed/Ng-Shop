@@ -31,7 +31,7 @@ router.post("/", async (req, res) => {
   if (!category) {
     return res.status(404).send("The category cannot be created!");
   }
-  res.status(200).send(category);
+  res.status(200).send({ success: true, category: category });
 });
 
 router.put("/:id", async (req, res) => {
