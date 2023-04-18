@@ -8,6 +8,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { ColorPickerModule } from 'primeng/colorpicker';
 
 @NgModule({
     exports: [
@@ -17,7 +18,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
         TableModule,
         InputTextModule,
         ToastModule,
-        ConfirmDialogModule
+        ConfirmDialogModule,
+        ColorPickerModule
     ],
     providers: [MessageService, ConfirmationService]
 })

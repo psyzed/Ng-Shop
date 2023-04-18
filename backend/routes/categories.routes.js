@@ -31,7 +31,7 @@ router.post("/", async (req, res) => {
   if (!category) {
     return res.status(404).send("The category cannot be created!");
   }
-  res.status(200).send({ success: true, category: category });
+  res.status(200).send(category);
 });
 
 router.put("/:id", async (req, res) => {
@@ -56,9 +56,7 @@ router.delete("/:id", async (req, res) => {
   try {
     const category = await Category.findByIdAndRemove(req.params.id);
     if (category) {
-      return res
-        .status(200)
-        .send({ success: true, message: "Category Deleted!" });
+      return res.send(category);
     } else {
       return res
         .status(404)
