@@ -36,9 +36,7 @@ router.get("/", async (req, res) => {
   if (req.query.categories) {
     queryParams = { category: req.query.categories.split(",") };
   }
-  const productList = await Product.find(queryParams).select(
-    "name category id"
-  );
+  const productList = await Product.find(queryParams);
 
   if (!productList) {
     res.status(500).send({ success: false });
