@@ -16,7 +16,7 @@ import { CategoriesFormComponent } from './pages/categories/categories-form/cate
 import { ProductsListComponent } from './pages/products/products-list/products-list.component';
 import { ProductsFormComponent } from './pages/products/products-form/products-form.component';
 
-import { NgPrimeModule } from './ng-prime.module';
+import { NgPrimeModule } from '@frontend/ui';
 
 @NgModule({
     declarations: [

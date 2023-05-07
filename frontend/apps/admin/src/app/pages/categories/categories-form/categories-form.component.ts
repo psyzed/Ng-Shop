@@ -65,10 +65,10 @@ export class CategoriesFormComponent implements OnInit {
                 )
             )
             .pipe(take(1))
-            .subscribe((res: Category) => {
-                this.categoryForm['name'].setValue(res.name);
-                this.categoryForm['icon'].setValue(res.icon);
-                this.categoryForm['color'].setValue(res.color);
+            .subscribe((category: Category) => {
+                this.categoryForm['name'].setValue(category.name);
+                this.categoryForm['icon'].setValue(category.icon);
+                this.categoryForm['color'].setValue(category.color);
             });
     }
 
@@ -93,7 +93,7 @@ export class CategoriesFormComponent implements OnInit {
                     this.toastMessageService.add({
                         severity: 'error',
                         summary: 'Error',
-                        detail: 'Category is not created, please trye again later'
+                        detail: 'Category is not created, please try again later'
                     });
                 }
             );
@@ -120,7 +120,7 @@ export class CategoriesFormComponent implements OnInit {
                     this.toastMessageService.add({
                         severity: 'error',
                         summary: 'Error',
-                        detail: 'Category is not updated, please trye again later'
+                        detail: 'Category was not updated, please try again later'
                     });
                 }
             );
