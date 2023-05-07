@@ -159,6 +159,7 @@ router.post("/", uploadOptions.single("image"), async (req, res) => {
 
 //Updating a product
 router.put("/:id", uploadOptions.single("image"), async (req, res) => {
+  console.log(req.params.id);
   if (!mongoose.isValidObjectId(req.params.id)) {
     logger.productsRoutesErrorLogger.log(
       "id-error",

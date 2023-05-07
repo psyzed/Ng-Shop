@@ -18,8 +18,8 @@ export interface Product {
     dateCreated: string;
 }
 
-export interface ProductFormData {
-    id?: string;
+export interface ProductFormData extends FormData {
+    id: string;
     name: string;
     brand: string;
     price: number;
@@ -27,7 +27,7 @@ export interface ProductFormData {
     countInStock: number;
     description: string;
     richDescription: string;
-    image?: File;
+    image: File | null;
     isFeatured: boolean;
 }
 

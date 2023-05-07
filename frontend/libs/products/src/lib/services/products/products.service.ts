@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 import { Observable } from 'rxjs';
-import { Product } from '../../models/product.model';
+import { Product, ProductFormData } from '../../models/product.model';
 
 @Injectable({
     providedIn: 'root'
@@ -23,12 +23,9 @@ export class ProductsService {
         return this.http.post<Product>(this.apiURLProducts, product);
     }
 
-    editProduct(
-        editedProduct: FormData,
-        editedProductId: string
-    ): Observable<Product> {
+    editProduct(editedProduct: ProductFormData): Observable<Product> {
         return this.http.put<Product>(
-            `${this.apiURLProducts}/${editedProductId}`,
+            `${this.apiURLProducts}/${editedProduct.get('id')}`,
             editedProduct
         );
     }

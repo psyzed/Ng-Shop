@@ -5,6 +5,7 @@ import {
     CategoriesService,
     Category,
     Product,
+    ProductFormData,
     ProductsService
 } from '@frontend/products';
 import { filter, switchMap, take, tap, timer } from 'rxjs';
@@ -59,7 +60,8 @@ export class ProductsFormComponent implements OnInit {
     onSubmit() {
         this.isSubmited = true;
         if (this.newProductForm.valid) {
-            const productFormData = new FormData();
+            const productFormData: ProductFormData =
+                new FormData() as ProductFormData;
             Object.keys(this.newProductForm.controls).map((key) => {
                 productFormData.append(
                     key,
@@ -67,6 +69,7 @@ export class ProductsFormComponent implements OnInit {
                 );
             });
             if (this.editMode) {
+                productFormData.append('id', this.editedProductId);
                 this._editProduct(productFormData);
             } else {
                 this._addProduct(productFormData);
@@ -152,9 +155,9 @@ export class ProductsFormComponent implements OnInit {
             );
     }
 
-    private _editProduct(product: FormData) {
+    private _editProduct(product: ProductFormData) {
         this.productsService
-            .editProduct(product, this.editedProductId)
+            .editProduct(product)
             .pipe(take(1))
             .subscribe(
                 (res) => {
