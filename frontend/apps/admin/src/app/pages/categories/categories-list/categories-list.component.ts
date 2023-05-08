@@ -44,14 +44,14 @@ export class CategoriesListComponent implements OnInit {
         this.router.navigate([`categories/form/${categoryId}`]);
     }
 
-    onDeleteCategory(id: string) {
+    onDeleteCategory(categoryId: string) {
         this.confirmationService.confirm({
             message: 'Are you sure you want to delete this category?',
             header: 'Delete Category',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
                 this.categoriesService
-                    .deleteCategory(id)
+                    .deleteCategory(categoryId)
                     .pipe(take(1))
                     .subscribe(
                         (category: Category) => {
@@ -66,7 +66,7 @@ export class CategoriesListComponent implements OnInit {
                             this.toastMessageService.add({
                                 severity: 'error',
                                 summary: 'Error',
-                                detail: 'Category is not deleted, please trye again later'
+                                detail: 'Category was not deleted, please try again later'
                             });
                         }
                     );

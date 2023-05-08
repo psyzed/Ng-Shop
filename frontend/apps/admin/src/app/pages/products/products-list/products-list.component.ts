@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product, ProductsService } from '@frontend/products';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { take } from 'rxjs';
 
 @Component({
@@ -14,6 +14,7 @@ export class ProductsListComponent implements OnInit {
     constructor(
         private productsService: ProductsService,
         private toastMessageService: MessageService,
+        private confirmationService: ConfirmationService,
         private router: Router
     ) {}
 
@@ -39,7 +40,36 @@ export class ProductsListComponent implements OnInit {
             );
     }
 
-    onDeleteProduct(productId: string) {}
+    onDeleteProduct(productId: string) {
+        this.confirmationService.confirm({
+            message: 'Are you sure you want to delete this product?',
+            header: 'Delete Product',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.productsService
+                    .deleteProduct(productId)
+                    .pipe(take(1))
+                    .subscribe(
+                        (product: Product) => {
+                            console.log(product.name);
+                            this.toastMessageService.add({
+                                severity: 'success',
+                                summary: 'Success',
+                                detail: `Product Deleted!`
+                            });
+                            this._getProducts();
+                        },
+                        (error) => {
+                            this.toastMessageService.add({
+                                severity: 'error',
+                                summary: 'Error',
+                                detail: 'Product was not deleted, please try again later'
+                            });
+                        }
+                    );
+            }
+        });
+    }
 
     onEditProduct(productId: string) {
         this.router.navigate([`products/form/${productId}`]);

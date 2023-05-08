@@ -243,6 +243,7 @@ router.put("/:id", uploadOptions.single("image"), async (req, res) => {
   }
 });
 
+//Update product image gallery
 router.put(
   "/gallery/images/:id",
   uploadOptions.array("images", 10),
@@ -300,9 +301,10 @@ router.put(
   }
 );
 
+//Deleting a product
 router.delete("/:id", async (req, res) => {
   const id = req.params.id;
-  if ((!id, mongoose.isValidObjectId)) {
+  if (!mongoose.isValidObjectId(id)) {
     logger.productsRoutesErrorLogger.log(
       "id-error",
       "Invalid mongo id provided when trying to delete a product by id"
@@ -312,7 +314,7 @@ router.delete("/:id", async (req, res) => {
       .send({ success: false, message: "The provided id is wrong!" });
   }
   try {
-    const product = await Product.findByIdAndRemove(req.params.id);
+    const product = await Product.findByIdAndRemove(id);
     if (product) {
       return res
         .status(200)

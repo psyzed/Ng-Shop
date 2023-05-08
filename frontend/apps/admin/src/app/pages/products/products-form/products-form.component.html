@@ -172,6 +172,13 @@
                                 accept="image/*"
                                 (change)="onImageUpload($event)"
                             />
+                            <small
+                                *ngIf="
+                                    productForm['image'].invalid && isSubmited
+                                "
+                                class="p-error"
+                                >Image is required</small
+                            >
                             <div class="col-2 mt-2 pl-0">
                                 <img class="w-full" [src]="uploadedImage" />
                             </div>

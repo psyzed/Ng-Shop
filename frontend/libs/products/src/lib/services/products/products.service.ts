@@ -29,4 +29,8 @@ export class ProductsService {
             editedProduct
         );
     }
+
+    deleteProduct(productId: string): Observable<Product> {
+        return this.http.delete<Product>(`${this.apiURLProducts}/${productId}`);
+    }
 }
