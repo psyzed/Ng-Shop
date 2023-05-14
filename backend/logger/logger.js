@@ -36,4 +36,25 @@ const categoriesRoutesErrorLogger = createLogger({
   ],
 });
 
-module.exports = { productsRoutesErrorLogger, categoriesRoutesErrorLogger };
+const usersRoutesErrorLogger = createLogger({
+  transports: [
+    new transports.File({
+      filename: path.join(__dirname, "./logs/usersRoutesLogs/usersError.log"),
+      level: "error",
+      format: combine(
+        timestamp({ format: "DD-MM-YYYY HH:mm:ss" }),
+        printf(
+          (info) =>
+            `${info.timestamp} ${info.level} [${info.requestType}]: ${info.message}`
+        )
+      ),
+      timeZone: "Europe/Athens",
+    }),
+  ],
+});
+
+module.exports = {
+  productsRoutesErrorLogger,
+  categoriesRoutesErrorLogger,
+  usersRoutesErrorLogger,
+};

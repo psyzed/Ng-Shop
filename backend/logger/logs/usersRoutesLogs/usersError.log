@@ -1,0 +1,15 @@
+14-05-2023 21:55:56 error [undefined]: DELETE
+14-05-2023 21:58:26 error [undefined]: DELETE
+14-05-2023 21:58:48 error [undefined]: DELETE
+14-05-2023 21:58:57 error [undefined]: DELETE
+14-05-2023 21:59:17 error [undefined]: DELETE
+14-05-2023 21:59:22 error [undefined]: DELETE
+14-05-2023 21:59:27 error [undefined]: DELETE
+14-05-2023 22:03:06 [error] [undefined]: DELETE
+14-05-2023 22:07:25 error [DELETE]: Unable to find user
+14-05-2023 22:10:43 error [undefined]: DELETE
+14-05-2023 22:11:18 error [undefined]: DELETE
+14-05-2023 22:12:16 error [DELETE]: Unable to find user
+14-05-2023 22:12:25 error [DELETE]: Unable to find user
+14-05-2023 22:12:52 error [DELETE]: Invalid mongoDB id
+14-05-2023 22:19:50 error [DELETE]: Invalid mongoDB id

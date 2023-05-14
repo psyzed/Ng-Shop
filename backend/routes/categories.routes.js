@@ -33,7 +33,7 @@ router.get("/:id", async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id)) {
     logger.categoriesRoutesErrorLogger.log(
       "error",
-      "Invalid category id provided while trying to fetch."
+      "Invalid mongoDB id provided while trying to fetch."
     );
     return res.status(400).send({ message: "Invalid category id provided." });
   }
