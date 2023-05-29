@@ -14,6 +14,8 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ColorPickerModule } from 'primeng/colorpicker';
 import { EditorModule } from 'primeng/editor';
+import { TagModule } from 'primeng/tag';
+import { InputMaskModule } from 'primeng/inputmask';
 
 @NgModule({
     exports: [
@@ -29,7 +31,9 @@ import { EditorModule } from 'primeng/editor';
         ToastModule,
         ConfirmDialogModule,
         ColorPickerModule,
-        EditorModule
+        EditorModule,
+        TagModule,
+        InputMaskModule
     ],
     providers: [MessageService, ConfirmationService]
 })

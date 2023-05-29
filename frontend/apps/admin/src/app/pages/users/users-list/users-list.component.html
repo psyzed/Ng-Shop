@@ -26,23 +26,36 @@
                 >
                     <ng-template pTemplate="header">
                         <tr>
-                            <th pSortableColumn="name">
+                            <th class="text-center" pSortableColumn="name">
                                 Name<p-sortIcon field="name"></p-sortIcon>
                             </th>
-                            <th>Email</th>
-                            <th>Is Admin</th>
-                            <th>Country</th>
-                            <th>Actions</th>
+                            <th class="text-center">Email</th>
+                            <th class="text-center">Is Admin</th>
+                            <th class="text-center">Country</th>
+                            <th class="text-center">Actions</th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-user>
                         <tr>
-                            <td>{{ user.name }}</td>
-                            <td>{{ user.email }}</td>
-                            <td>{{ user.isAdmin }}</td>
-                            <td>{{ user.country }}</td>
+                            <td class="text-center">{{ user.name }}</td>
+                            <td class="text-center">{{ user.email }}</td>
+                            <td class="text-center">
+                                <p-tag
+                                    *ngIf="user"
+                                    [icon]="
+                                        user.isAdmin
+                                            ? 'pi pi-check m-0'
+                                            : 'pi pi-times m-0'
+                                    "
+                                    [severity]="
+                                        user.isAdmin ? 'success' : 'danger'
+                                    "
+                                    [rounded]="true"
+                                ></p-tag>
+                            </td>
+                            <td class="text-center">{{ user.country }}</td>
 
-                            <td>
+                            <td class="text-center">
                                 <p-button
                                     (onClick)="onDeleteUser(user._id)"
                                     styleClass="p-button-danger mr-2"
