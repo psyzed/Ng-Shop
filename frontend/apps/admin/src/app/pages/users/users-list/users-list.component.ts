@@ -22,26 +22,6 @@ export class UsersListComponent implements OnInit {
         this._getUsers();
     }
 
-    private _getUsers() {
-        this.usersService
-            .getUsers()
-            .pipe(
-                take(1),
-                tap((users: User[]) => {
-                    this.users = users;
-                }),
-                catchError((err) => {
-                    this.toastMessageService.add({
-                        severity: 'error',
-                        summary: 'Error',
-                        detail: 'Users could not be fetched, please try again later'
-                    });
-                    return of(err);
-                })
-            )
-            .subscribe();
-    }
-
     onEditUser(userId: string) {
         this.router.navigate([`users/form/${userId}`]);
     }
@@ -76,5 +56,29 @@ export class UsersListComponent implements OnInit {
                     .subscribe();
             }
         });
+    }
+
+    getCountryName(countryKey: string) {
+        return this.usersService.getCountryName(countryKey);
+    }
+
+    private _getUsers() {
+        this.usersService
+            .getUsers()
+            .pipe(
+                take(1),
+                tap((users: User[]) => {
+                    this.users = users;
+                }),
+                catchError((err) => {
+                    this.toastMessageService.add({
+                        severity: 'error',
+                        summary: 'Error',
+                        detail: 'Users could not be fetched, please try again later'
+                    });
+                    return of(err);
+                })
+            )
+            .subscribe();
     }
 }

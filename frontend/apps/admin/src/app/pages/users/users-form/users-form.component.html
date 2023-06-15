@@ -1,5 +1,8 @@
 <p-toast></p-toast>
 <div class="admin-page">
+    <div *ngIf="isLoading" class="overlay">
+        <p-progressSpinner></p-progressSpinner>
+    </div>
     <p-card
         [header]="editMode ? 'Edit User' : 'Add User'"
         subheader="Add Or Edit Users"
@@ -59,7 +62,6 @@
                                         userForm['email'].hasError('required')
                                     "
                                     >Email is required</span
-                                >
                                 ><span
                                     *ngIf="userForm['email'].hasError('email')"
                                     >Email is Invalid</span
@@ -82,10 +84,10 @@
                                 >Password is required</small
                             >
                         </div>
-                        <div
-                            class="field col-4 flex flex-column align-items-center"
-                        >
-                            <label for="phone">Phone</label>
+                        <div class="field col-4 flex flex-column">
+                            <div class="text-center">
+                                <label for="phone">Phone</label>
+                            </div>
                             <p-inputMask
                                 mask="(6999) 999 999"
                                 formControlName="phone"
@@ -143,11 +145,12 @@
                                     class="w-full"
                                 />
                             </div>
-                            <div
-                                class="field col-4 flex flex-column align-items-center"
-                            >
-                                <label for="country">Country</label>
+                            <div class="field col-4 flex flex-column">
+                                <div class="text-center m-1">
+                                    <label for="country">Country</label>
+                                </div>
                                 <p-dropdown
+                                    styleClass="w-full"
                                     [options]="countries"
                                     formControlName="country"
                                     optionLabel="name"

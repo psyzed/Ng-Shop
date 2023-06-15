@@ -53,7 +53,9 @@
                                     [rounded]="true"
                                 ></p-tag>
                             </td>
-                            <td class="text-center">{{ user.country }}</td>
+                            <td class="text-center">
+                                {{ getCountryName(user.country) }}
+                            </td>
 
                             <td class="text-center">
                                 <p-button

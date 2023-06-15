@@ -16,6 +16,7 @@ import { ColorPickerModule } from 'primeng/colorpicker';
 import { EditorModule } from 'primeng/editor';
 import { TagModule } from 'primeng/tag';
 import { InputMaskModule } from 'primeng/inputmask';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
     exports: [
@@ -33,7 +34,8 @@ import { InputMaskModule } from 'primeng/inputmask';
         ColorPickerModule,
         EditorModule,
         TagModule,
-        InputMaskModule
+        InputMaskModule,
+        ProgressSpinnerModule
     ],
     providers: [MessageService, ConfirmationService]
 })

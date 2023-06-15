@@ -7,7 +7,7 @@ export interface User {
     name: string;
     email: string;
     password: string;
-    token: string;
+    token?: string;
     phone: string;
     isAdmin: boolean;
     street: string;
