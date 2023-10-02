@@ -22,24 +22,6 @@ export class CategoriesListComponent implements OnInit {
         this._getCategories();
     }
 
-    private _getCategories() {
-        this.categoriesService
-            .getCategories()
-            .pipe(take(1))
-            .subscribe(
-                (categories: Category[]) => {
-                    this.categories = categories;
-                },
-                (error) => {
-                    this.toastMessageService.add({
-                        severity: 'error',
-                        summary: 'Error',
-                        detail: 'Categories could not be fetched, please try again later'
-                    });
-                }
-            );
-    }
-
     editCategory(categoryId: string) {
         this.router.navigate([`categories/form/${categoryId}`]);
     }
@@ -72,5 +54,23 @@ export class CategoriesListComponent implements OnInit {
                     );
             }
         });
+    }
+
+    private _getCategories() {
+        this.categoriesService
+            .getCategories()
+            .pipe(take(1))
+            .subscribe(
+                (categories: Category[]) => {
+                    this.categories = categories;
+                },
+                (error) => {
+                    this.toastMessageService.add({
+                        severity: 'error',
+                        summary: 'Error',
+                        detail: 'Categories could not be fetched, please try again later'
+                    });
+                }
+            );
     }
 }

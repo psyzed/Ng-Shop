@@ -3,20 +3,6 @@
     <p-card header="Orders" subheader="List of all Orders">
         <div class="grid">
             <div class="col-12">
-                <p-toolbar>
-                    <div class="toolbar-group-left">
-                        <p-button
-                            styleClass="p-button-success"
-                            label="New"
-                            icon="pi pi-plus"
-                            routerLink="form"
-                        ></p-button>
-                    </div>
-                </p-toolbar>
-            </div>
-        </div>
-        <div class="grid">
-            <div class="col-12">
                 <p-table
                     styleClass="p-datatable-gridlines"
                     [value]="orders"
@@ -25,38 +11,51 @@
                     <ng-template pTemplate="header">
                         <tr>
                             <th class="text-center" pSortableColumn="name">
-                                Name<p-sortIcon field="name"></p-sortIcon>
+                                User<p-sortIcon field="name"></p-sortIcon>
                             </th>
-                            <th class="text-center">Icon</th>
-                            <th class="text-center">Color</th>
+                            <th
+                                class="text-center"
+                                pSortableColumn="totalPrice"
+                            >
+                                Total Price
+                                <p-sortIcon field="totalPrice"></p-sortIcon>
+                            </th>
+                            <th
+                                class="text-center"
+                                pSortableColumn="dateOrdered"
+                            >
+                                Date Ordered
+                                <p-sortIcon field="dateOrdered"></p-sortIcon>
+                            </th>
+                            <th class="text-center" pSortableColumn="status">
+                                Status <p-sortIcon field="status"></p-sortIcon>
+                            </th>
                             <th class="text-center">Actions</th>
                         </tr>
                     </ng-template>
-                    <ng-template pTemplate="body" let-category>
+                    <ng-template pTemplate="body" let-order>
                         <tr>
-                            <td class="text-center">{{ category.name }}</td>
+                            <td class="text-center">{{ order.user.name }}</td>
+                            <td class="text-center">{{ order.totalPrice }}€</td>
                             <td class="text-center">
-                                <i
-                                    style="font-size: 2rem"
-                                    class="pi"
-                                    [ngClass]="'pi-' + category.icon"
-                                ></i>
+                                {{ order.dateOrdered | date : 'short' }}
                             </td>
                             <td class="text-center">
-                                <div
-                                    class="color-preview text-center m-auto"
-                                    [style.background-color]="category.color"
-                                ></div>
+                                <p-tag
+                                    [value]="orderStatus[order.status].label"
+                                    [severity]="orderStatus[order.status].color"
+                                    [rounded]="true"
+                                ></p-tag>
                             </td>
                             <td class="text-center">
                                 <p-button
-                                    (onClick)="onDeleteCategory(category._id)"
+                                    (onClick)="onDeleteOrder(order._id)"
                                     styleClass="p-button-danger mr-2"
                                     icon="pi pi-trash"
                                 ></p-button>
 
                                 <p-button
-                                    (onClick)="editCategory(category._id)"
+                                    (onClick)="onShowOrder(order._id)"
                                     styleClass="p-button-warning"
                                     icon="pi pi-pencil"
                                 ></p-button>
