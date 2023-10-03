@@ -1,1 +1,75 @@
-<p>orders-detail works!</p>
+<p-toast></p-toast>
+<div class="admin-page" *ngIf="order">
+    <p-card header="View Details" subheader="Edit Order Status">
+        <p-fieldset
+            legend="Order Details"
+            [toggleable]="true"
+            styleClass="mb-4"
+        >
+            <div class="grid">
+                <div class="col-4">
+                    <h5>Order Id</h5>
+                    <p>{{ order._id }}</p>
+                </div>
+                <div class="col-4">
+                    <h5>Orde Date</h5>
+                    <p>{{ order.dateOrdered | date : 'short' }}</p>
+                </div>
+                <div class="col-4">
+                    <h5>Order Status</h5>
+                    <p-dropdown styleClass="w-full"></p-dropdown>
+                </div>
+                <div class="col-4">
+                    <h5>Order Total Price</h5>
+                    <p>{{ order.totalPrice | currency : '€' }}</p>
+                </div>
+            </div>
+        </p-fieldset>
+        <p-fieldset legend="Order Items" [toggleable]="true" styleClass="mb-4">
+            <div class="grid mb-5">
+                <div class="col-2 font-bold">Name</div>
+                <div class="col-2 font-bold">Brand</div>
+                <div class="col-2 font-bold">Category</div>
+                <div class="col-2 font-bold">Price</div>
+                <div class="col-2 font-bold">Quantity</div>
+                <div class="col-2 font-bold">Subtotal</div>
+            </div>
+            <div class="grid mb-5" *ngFor="let orderItem of order.orderItems">
+                <div class="col-2">{{ orderItem.product.name }}</div>
+                <div class="col-2">{{ orderItem.product.brand }}</div>
+                <div class="col-2">{{ orderItem.product.category.name }}</div>
+                <div class="col-2">
+                    {{ orderItem.product.price | currency : '€' }}
+                </div>
+                <div class="col-2">{{ orderItem.quantity }}</div>
+                <div class="col-2">
+                    {{
+                        orderItem.product.price * orderItem.quantity
+                            | currency : '€'
+                    }}
+                </div>
+            </div>
+            <div class="grid" style="color: green">
+                <div class="col-2 col-offset-8 font-bold">Total Price</div>
+                <div class="col-2 font-bold">
+                    {{ order.totalPrice | currency : '€' }}
+                </div>
+            </div>
+        </p-fieldset>
+        <p-fieldset
+            legend="Order Address"
+            [toggleable]="true"
+            styleClass="mb-4"
+        >
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+        </p-fieldset>
+    </p-card>
+</div>

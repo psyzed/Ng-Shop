@@ -36,7 +36,9 @@
                     <ng-template pTemplate="body" let-order>
                         <tr>
                             <td class="text-center">{{ order.user.name }}</td>
-                            <td class="text-center">{{ order.totalPrice }}€</td>
+                            <td class="text-center">
+                                {{ order.totalPrice | currency : '€' }}
+                            </td>
                             <td class="text-center">
                                 {{ order.dateOrdered | date : 'short' }}
                             </td>
@@ -56,8 +58,8 @@
 
                                 <p-button
                                     (onClick)="onShowOrder(order._id)"
-                                    styleClass="p-button-warning"
-                                    icon="pi pi-pencil"
+                                    styleClass="p-button-success"
+                                    icon="pi pi-eye"
                                 ></p-button>
                             </td>
                         </tr>

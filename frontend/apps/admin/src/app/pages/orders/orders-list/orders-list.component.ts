@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ORDER_STATUS, Order, OrdersService } from '@frontend/orders';
 import { MessageService } from 'primeng/api';
 import { take, tap } from 'rxjs';
@@ -14,7 +15,8 @@ export class OrdersListComponent implements OnInit {
 
     constructor(
         private ordersService: OrdersService,
-        private toastMessageService: MessageService
+        private toastMessageService: MessageService,
+        private router: Router
     ) {}
 
     ngOnInit(): void {
@@ -23,7 +25,9 @@ export class OrdersListComponent implements OnInit {
 
     onDeleteOrder(id: string) {}
 
-    onShowOrder(id: string) {}
+    onShowOrder(id: string) {
+        this.router.navigateByUrl(`orders/${id}`);
+    }
 
     private _getOrders() {
         this.ordersService

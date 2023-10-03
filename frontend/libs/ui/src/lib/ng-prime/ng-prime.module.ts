@@ -17,6 +17,7 @@ import { EditorModule } from 'primeng/editor';
 import { TagModule } from 'primeng/tag';
 import { InputMaskModule } from 'primeng/inputmask';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { FieldsetModule } from 'primeng/fieldset';
 
 @NgModule({
     exports: [
@@ -35,7 +36,8 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
         EditorModule,
         TagModule,
         InputMaskModule,
-        ProgressSpinnerModule
+        ProgressSpinnerModule,
+        FieldsetModule
     ],
     providers: [MessageService, ConfirmationService]
 })

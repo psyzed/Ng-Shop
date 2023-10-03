@@ -3,7 +3,7 @@ import { OrderItem } from './order-item.model';
 
 export interface Order {
     _id: string;
-    orderItem: OrderItem;
+    orderItems: OrderItem[];
     shippingAddress1: string;
     shippingAddress2: string;
     city: string;

@@ -2,6 +2,8 @@ const { Order } = require("../models/order");
 const { OrderItem } = require("../models/order-item");
 const express = require("express");
 const router = express.Router();
+const logger = require("../logger/logger");
+const mongoose = require("mongoose");
 
 router.get(`/`, async (req, res) => {
   const orderList = await Order.find()
@@ -59,17 +61,30 @@ router.get("/totalorders", async (req, res) => {
 });
 
 router.get(`/:id`, async (req, res) => {
-  const order = await Order.findById(req.params.id)
-    .populate("user", "name")
-    .populate({
-      path: "orderItems",
-      populate: { path: "product", populate: "category" },
-    });
-
-  if (!order) {
-    res.status(500).send({ success: false });
+  const id = req.params.id;
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    logger.ordersRoutesErrorLogger.log(
+      "error",
+      "Invalid mongoDB id provided while trying to fetch."
+    );
+    return res.status(400).send({ message: "Invalid order id provided." });
   }
-  res.send({ success: true, order: order });
+
+  try {
+    const order = await Order.findById(req.params.id)
+      .populate("user", "name")
+      .populate({
+        path: "orderItems",
+        populate: { path: "product", populate: "category" },
+      });
+
+    if (!order) {
+      res.status(500).send({ success: false });
+    }
+    res.send(order);
+  } catch (error) {
+    res.status(500).send({ success: false, message: "Something went wrong." });
+  }
 });
 
 router.post("/", async (req, res) => {
