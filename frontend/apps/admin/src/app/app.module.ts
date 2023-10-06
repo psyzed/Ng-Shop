@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { NxWelcomeComponent } from './nx-welcome.component';
@@ -42,6 +42,7 @@ import { OrdersDetailComponent } from './pages/orders/orders-detail/orders-detai
         BrowserModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
+        FormsModule,
         HttpClientModule,
         NgPrimeModule,
         RouterModule.forRoot(appRoutes, {

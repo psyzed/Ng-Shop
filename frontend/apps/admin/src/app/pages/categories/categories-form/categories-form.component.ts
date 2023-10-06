@@ -93,7 +93,7 @@ export class CategoriesFormComponent implements OnInit {
                     this.toastMessageService.add({
                         severity: 'error',
                         summary: 'Error',
-                        detail: 'Category is not created, please try again later'
+                        detail: 'Category was not created, please try again later'
                     });
                 }
             );

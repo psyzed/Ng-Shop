@@ -1,6 +1,11 @@
 import { User } from '@frontend/users';
 import { OrderItem } from './order-item.model';
 
+export interface OrderApiResponse {
+    message: string;
+    success: boolean;
+    order: Order;
+}
 export interface Order {
     _id: string;
     orderItems: OrderItem[];
@@ -16,7 +21,7 @@ export interface Order {
     dateOrdered: Date;
 }
 
-interface OrderStatus {
+export interface OrderStatus {
     [key: number]: {
         label: string;
         color: string;

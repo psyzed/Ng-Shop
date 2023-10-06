@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 import { Observable } from 'rxjs';
-import { Order } from '../models/order.model';
+import { Order, OrderApiResponse } from '../models/order.model';
 
 @Injectable({ providedIn: 'root' })
 export class OrdersService {
@@ -21,14 +21,17 @@ export class OrdersService {
         return this.http.post<Order>(this._apiURLOrders, order);
     }
 
-    editOrder(editedOrder: Order) {
-        return this.http.put<Order>(
-            `${this._apiURLOrders}/${editedOrder._id}`,
-            editedOrder
+    updateOrder(
+        orderStatus: { status: number },
+        orderId: string
+    ): Observable<OrderApiResponse> {
+        return this.http.put<OrderApiResponse>(
+            `${this._apiURLOrders}/${orderId}`,
+            orderStatus
         );
     }
 
-    deleteOrder(orderId: string): Observable<Order> {
-        return this.http.delete<Order>(`${this._apiURLOrders}/${orderId}`);
+    deleteOrder(orderId: string): Observable<OrderApiResponse> {
+        return this.http.delete<OrderApiResponse>(`${this._apiURLOrders}/${orderId}`);
     }
 }

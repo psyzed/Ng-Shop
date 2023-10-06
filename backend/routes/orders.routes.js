@@ -72,7 +72,7 @@ router.get(`/:id`, async (req, res) => {
 
   try {
     const order = await Order.findById(req.params.id)
-      .populate("user", "name")
+      .populate("user")
       .populate({
         path: "orderItems",
         populate: { path: "product", populate: "category" },
@@ -141,20 +141,29 @@ router.post("/", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
-  let order = await Order.findByIdAndUpdate(
-    req.params.id,
-    {
-      status: req.body.status,
-    },
-    { new: true }
-  );
+  try {
+    let order = await Order.findByIdAndUpdate(
+      req.params.id,
+      {
+        status: req.body.status,
+      },
+      { new: true }
+    );
 
-  if (order) {
-    res
-      .status(200)
-      .send({ success: true, message: "Status updated!", order: order });
-  } else {
-    res.status(400).send({ success: false, message: "Something went wrong." });
+    if (order) {
+      res
+        .status(200)
+        .send({ success: true, message: "Status updated!", order: order });
+    } else {
+      res
+        .status(400)
+        .send({ success: false, message: "Something went wrong." });
+    }
+  } catch (error) {
+    res.status(500).send({
+      success: false,
+      message: "Something went wrong, please try again later.",
+    });
   }
 });
 
@@ -171,7 +180,9 @@ router.delete("/:id", async (req, res) => {
             })
           )
         );
-        res.status(200).send({ success: true, message: "Order Deleted!" });
+        res
+          .status(200)
+          .send({ success: true, message: "Order Deleted!", order: order });
       } else {
         res
           .status(404)
