@@ -9,17 +9,16 @@ function authJwt() {
     isRevoked: isRevoked,
   }).unless({
     path: [
-      // { url: /\/public\/uploads(.*)/, methods: ["GET", "OPTIONS"] },
-      // { url: /\/api\/v1\/products(.*)/, methods: ["GET", "OPTIONS"] },
-      // { url: /\/api\/v1\/categories(.*)/, methods: ["GET", "OPTIONS"] },
-      // { url: /\/api\/v1\/orders(.*)/, methods: ["GET", "OPTIONS"] },
-      // `${api}/users/login`,
-      // `${api}/users/register`,
-      { url: /(.*)/ },
+      { url: /\/public\/uploads(.*)/, methods: ["GET", "OPTIONS"] },
+      { url: /\/api\/v1\/products(.*)/, methods: ["GET", "OPTIONS"] },
+      { url: /\/api\/v1\/categories(.*)/, methods: ["GET", "OPTIONS"] },
+      { url: /\/api\/v1\/orders(.*)/, methods: ["GET", "OPTIONS"] },
+      `${api}/users/login`,
+      `${api}/users/register`,
     ],
   });
 
-  //This fyunction checks if the user is admin
+  //This function checks if the user is admin
   async function isRevoked(req, payload) {
     if (!payload.payload.isAdmin) {
       return true;

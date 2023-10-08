@@ -79,7 +79,9 @@ router.get(`/:id`, async (req, res) => {
       });
 
     if (!order) {
-      res.status(500).send({ success: false });
+      return res
+        .status(404)
+        .send({ success: false, message: "Order not found" });
     }
     res.send(order);
   } catch (error) {

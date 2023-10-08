@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
@@ -21,6 +21,7 @@ import { UsersListComponent } from './pages/users/users-list/users-list.componen
 import { UsersFormComponent } from './pages/users/users-form/users-form.component';
 import { OrdersListComponent } from './pages/orders/orders-list/orders-list.component';
 import { OrdersDetailComponent } from './pages/orders/orders-detail/orders-detail.component';
+import { JwtInterceptor, UsersModule } from '@frontend/users';
 
 @NgModule({
     declarations: [
@@ -45,11 +46,14 @@ import { OrdersDetailComponent } from './pages/orders/orders-detail/orders-detai
         FormsModule,
         HttpClientModule,
         NgPrimeModule,
+        UsersModule,
         RouterModule.forRoot(appRoutes, {
             initialNavigation: 'enabledBlocking'
         })
     ],
-    providers: [],
+    providers: [
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

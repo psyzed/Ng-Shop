@@ -11,10 +11,10 @@ import { filter, switchMap, take, tap, timer } from 'rxjs';
     templateUrl: './categories-form.component.html'
 })
 export class CategoriesFormComponent implements OnInit {
-    newCategoryForm: FormGroup;
-    isSubmited = false;
-    editMode = false;
-    editedCategoryId: string;
+    public newCategoryForm: FormGroup;
+    public isSubmited = false;
+    public editMode = false;
+    public editedCategoryId: string;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -25,12 +25,7 @@ export class CategoriesFormComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.newCategoryForm = this.formBuilder.group({
-            name: [null, [Validators.required]],
-            icon: [null, [Validators.required]],
-            color: ['#fff']
-        });
-
+        this._initForm();
         this._checkEditMode();
     }
 
@@ -50,6 +45,10 @@ export class CategoriesFormComponent implements OnInit {
                 this._createCategory(category);
             }
         }
+    }
+
+    onGoBack() {
+        this.locationService.back();
     }
 
     private _checkEditMode() {
@@ -126,8 +125,12 @@ export class CategoriesFormComponent implements OnInit {
             );
     }
 
-    onGoBack() {
-        this.locationService.back();
+    private _initForm() {
+        this.newCategoryForm = this.formBuilder.group({
+            name: [null, [Validators.required]],
+            icon: [null, [Validators.required]],
+            color: ['#fff']
+        });
     }
 
     get categoryForm() {

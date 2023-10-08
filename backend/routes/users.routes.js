@@ -204,7 +204,7 @@ router.post("/login", async (req, res) => {
     const secret = process.env.secret;
 
     if (!user) {
-      logger.usersRoutesErrorLogger.log("Error", {
+      logger.usersRoutesErrorLogger.log("error", {
         requestType: "POST",
         message: "Error finding user while trying to log in",
       });
@@ -219,7 +219,7 @@ router.post("/login", async (req, res) => {
           isAdmin: user.isAdmin,
         },
         secret,
-        { expiresIn: "1d" }
+        { expiresIn: "1h" }
       );
 
       return res.status(200).send({

@@ -13,3 +13,4 @@
 14-05-2023 22:12:25 error [DELETE]: Unable to find user
 14-05-2023 22:12:52 error [DELETE]: Invalid mongoDB id
 14-05-2023 22:19:50 error [DELETE]: Invalid mongoDB id
+07-10-2023 16:07:41 error [POST]: Error finding user while trying to log in
