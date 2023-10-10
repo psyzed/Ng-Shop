@@ -1,6 +1,11 @@
 import { User } from '@frontend/users';
 import { OrderItem } from './order-item.model';
 
+export interface DashBoardTotals {
+    totalOrders?: number;
+    totalSales?: number;
+}
+
 export interface OrderApiResponse {
     message: string;
     success: boolean;

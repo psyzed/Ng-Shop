@@ -22,13 +22,11 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/get/count", async (req, res) => {
+router.get("/totalusers", async (req, res) => {
   try {
-    const totalUserCount = await User.countDocuments();
-    if (totalUserCount) {
-      return res
-        .status(200)
-        .send({ success: true, totalUserCount: totalUserCount });
+    const totalUsers = await User.countDocuments();
+    if (totalUsers) {
+      return res.status(200).send({ totalUsers });
     }
   } catch (error) {
     logger.usersRoutesErrorLogger.log("Error", {

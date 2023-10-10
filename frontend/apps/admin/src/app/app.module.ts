@@ -6,8 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { NxWelcomeComponent } from './nx-welcome.component';
-import { RouterModule } from '@angular/router';
-import { appRoutes } from './app.routes';
+import { RoutingModule, appRoutes } from './app-routing.module';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ShellComponent } from './shared/shell/shell.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
@@ -40,16 +39,14 @@ import { JwtInterceptor, UsersModule } from '@frontend/users';
         OrdersDetailComponent
     ],
     imports: [
+        RoutingModule,
         BrowserModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
         FormsModule,
         HttpClientModule,
         NgPrimeModule,
-        UsersModule,
-        RouterModule.forRoot(appRoutes, {
-            initialNavigation: 'enabledBlocking'
-        })
+        UsersModule
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }

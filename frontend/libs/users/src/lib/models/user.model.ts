@@ -1,6 +1,7 @@
 export interface UserApiResponse {
     success: boolean;
     user: User;
+    totalUsers?: number;
 }
 export interface User {
     id: string;

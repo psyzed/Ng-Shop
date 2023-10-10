@@ -336,13 +336,11 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-router.get("/get/count", async (req, res) => {
+router.get("/get/totalproducts", async (req, res) => {
   try {
-    const totalProductCount = await Product.countDocuments();
-    if (totalProductCount) {
-      return res
-        .status(200)
-        .send({ success: true, totalProductCount: totalProductCount });
+    const totalProducts = await Product.countDocuments();
+    if (totalProducts) {
+      return res.status(200).send({ totalProducts });
     }
   } catch (error) {
     logger.productsRoutesErrorLogger.log(

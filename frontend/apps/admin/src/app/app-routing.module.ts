@@ -1,4 +1,5 @@
-import { Route } from '@angular/router';
+import { NgModule } from '@angular/core';
+import { Route, RouterModule } from '@angular/router';
 import { ShellComponent } from './shared/shell/shell.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { CategoriesListComponent } from './pages/categories/categories-list/categories-list.component';
@@ -18,7 +19,7 @@ export const appRoutes: Route[] = [
         canActivate: [authGuard()],
         children: [
             {
-                path: 'dashboard',
+                path: '',
                 component: DashboardComponent
             },
             {
@@ -51,5 +52,20 @@ export const appRoutes: Route[] = [
             { path: 'orders', component: OrdersListComponent },
             { path: 'orders/:id', component: OrdersDetailComponent }
         ]
+    },
+    {
+        path: '**',
+        redirectTo: '',
+        pathMatch: 'full'
     }
 ];
+
+@NgModule({
+    imports: [
+        RouterModule.forRoot(appRoutes, {
+            initialNavigation: 'enabledBlocking'
+        })
+    ],
+    exports: [RouterModule]
+})
+export class RoutingModule {}

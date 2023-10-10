@@ -48,4 +48,8 @@ export class UsersService {
             return { id: entry[0], name: entry[1] };
         });
     }
+
+    getTotalUsers(): Observable<UserApiResponse> {
+        return this.http.get<UserApiResponse>(`${this.apiURLUsers}/totalusers`);
+    }
 }

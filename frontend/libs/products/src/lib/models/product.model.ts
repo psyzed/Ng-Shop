@@ -1,5 +1,9 @@
 import { Category } from './category.model';
 
+export interface ProductApiResponse {
+    totalProducts?: number;
+}
+
 export interface Product {
     id: string;
     image: string;

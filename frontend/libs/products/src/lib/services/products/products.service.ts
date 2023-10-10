@@ -2,7 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 import { Observable } from 'rxjs';
-import { Product, ProductFormData } from '../../models/product.model';
+import {
+    Product,
+    ProductApiResponse,
+    ProductFormData
+} from '../../models/product.model';
 
 @Injectable({
     providedIn: 'root'
@@ -32,5 +36,11 @@ export class ProductsService {
 
     deleteProduct(productId: string): Observable<Product> {
         return this.http.delete<Product>(`${this.apiURLProducts}/${productId}`);
+    }
+
+    getTotalProducts(): Observable<ProductApiResponse> {
+        return this.http.get<ProductApiResponse>(
+            `${this.apiURLProducts}/get/totalproducts`
+        );
     }
 }

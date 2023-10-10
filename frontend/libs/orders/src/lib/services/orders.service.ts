@@ -2,7 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 import { Observable } from 'rxjs';
-import { Order, OrderApiResponse } from '../models/order.model';
+import {
+    DashBoardTotals,
+    Order,
+    OrderApiResponse
+} from '../models/order.model';
 
 @Injectable({ providedIn: 'root' })
 export class OrdersService {
@@ -32,6 +36,20 @@ export class OrdersService {
     }
 
     deleteOrder(orderId: string): Observable<OrderApiResponse> {
-        return this.http.delete<OrderApiResponse>(`${this._apiURLOrders}/${orderId}`);
+        return this.http.delete<OrderApiResponse>(
+            `${this._apiURLOrders}/${orderId}`
+        );
+    }
+
+    getTotalOrders(): Observable<DashBoardTotals> {
+        return this.http.get<DashBoardTotals>(
+            `${this._apiURLOrders}/totalorders`
+        );
+    }
+
+    getTotalSales(): Observable<DashBoardTotals> {
+        return this.http.get<DashBoardTotals>(
+            `${this._apiURLOrders}/totalsales`
+        );
     }
 }
