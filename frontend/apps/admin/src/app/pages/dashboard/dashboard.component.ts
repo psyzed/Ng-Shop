@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { OrdersService } from '@frontend/orders';
 import { ProductsService } from '@frontend/products';
 import { UsersService } from '@frontend/users';
@@ -13,7 +12,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private _ordersService = inject(OrdersService);
     private _productsService = inject(ProductsService);
     private _userService = inject(UsersService);
-    private _route = inject(ActivatedRoute);
 
     private _destroy$ = new Subject<void>();
     public totalOrders = 0;

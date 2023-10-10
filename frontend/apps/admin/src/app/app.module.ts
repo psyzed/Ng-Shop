@@ -39,14 +39,14 @@ import { JwtInterceptor, UsersModule } from '@frontend/users';
         OrdersDetailComponent
     ],
     imports: [
-        RoutingModule,
         BrowserModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
         FormsModule,
         HttpClientModule,
         NgPrimeModule,
-        UsersModule
+        UsersModule,
+        RoutingModule
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
