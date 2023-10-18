@@ -1,12 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 import { Observable } from 'rxjs';
-import {
-    Product,
-    ProductApiResponse,
-    ProductFormData
-} from '../../models/product.model';
+import { Product, ProductApiResponse, ProductFormData } from '../../models/product.model';
 
 @Injectable({
     providedIn: 'root'
@@ -15,8 +11,21 @@ export class ProductsService {
     apiURLProducts = `${environment.apiURL}products`;
     constructor(private http: HttpClient) {}
 
-    getProducts(): Observable<Product[]> {
-        return this.http.get<Product[]>(this.apiURLProducts);
+    getProducts(categoriesIds?: string[], searchTerm?: string): Observable<Product[]> {
+        let params = new HttpParams();
+        if (categoriesIds) {
+            params = params.append('categories', categoriesIds.join(','));
+        }
+
+        if (searchTerm) {
+            params = params.append('search', searchTerm);
+        }
+
+        return this.http.get<Product[]>(this.apiURLProducts, { params: params });
+    }
+
+    getFeaturedProducts(count: number): Observable<Product[]> {
+        return this.http.get<Product[]>(`${this.apiURLProducts}/get/featured/${count}`);
     }
 
     getProductById(productId: string): Observable<Product> {
@@ -28,10 +37,7 @@ export class ProductsService {
     }
 
     editProduct(editedProduct: ProductFormData): Observable<Product> {
-        return this.http.put<Product>(
-            `${this.apiURLProducts}/${editedProduct.get('id')}`,
-            editedProduct
-        );
+        return this.http.put<Product>(`${this.apiURLProducts}/${editedProduct.get('id')}`, editedProduct);
     }
 
     deleteProduct(productId: string): Observable<Product> {
@@ -39,8 +45,6 @@ export class ProductsService {
     }
 
     getTotalProducts(): Observable<ProductApiResponse> {
-        return this.http.get<ProductApiResponse>(
-            `${this.apiURLProducts}/get/totalproducts`
-        );
+        return this.http.get<ProductApiResponse>(`${this.apiURLProducts}/get/totalproducts`);
     }
 }

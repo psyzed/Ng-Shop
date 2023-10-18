@@ -1,0 +1,53 @@
+<div class="grid product-page">
+    <div class="col-6"><ui-gallery [images]="product.images"></ui-gallery></div>
+    <div class="col-6 product">
+        <h2 class="product-title">{{ product.name }}</h2>
+        <p class="product-desc">{{ product.description }}</p>
+        <div class="product-rating">
+            <p-rating [(ngModel)]="product.rating" [disabled]="true" [cancel]="false"></p-rating>
+        </div>
+        <div class="product-price">
+            {{ product.price | currency : '€' }}
+            <span class="product-price-before">{{ product.price * 1.1 | currency : '€' }}</span>
+        </div>
+        <div class="product-quantity">
+            <label for="quantity">Quantity</label>
+            <p-inputNumber
+                [(ngModel)]="productQuantity"
+                mode="decimal"
+                [showButtons]="true"
+                inputId="quantity"
+                [min]="0"
+                [max]="100"
+            >
+            </p-inputNumber>
+        </div>
+        <div class="product-actions">
+            <p-button
+                label="Add to Cart"
+                styleClass="p-button-rounded btn"
+                icon="pi pi-shopping-cart"
+                (onClick)="onAddToCart(product.id)"
+            ></p-button>
+            <p-button
+                label="Buy Now"
+                styleClass="p-button-rounded btn"
+                icon="pi pi-check"
+                (onClick)="onBuyNow(product.id)"
+            ></p-button>
+        </div>
+    </div>
+</div>
+<div class="grid product-rich-desc">
+    <div class="col-12">
+        <div [innerHTML]="product.richDescription"></div>
+    </div>
+</div>
+<p-confirmDialog
+    [style]="{ width: '50vw' }"
+    [baseZIndex]="10000"
+    rejectButtonStyleClass="p-button-text"
+    [rejectVisible]="false"
+    [closable]="false"
+    acceptLabel="Ok"
+></p-confirmDialog>

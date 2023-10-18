@@ -39,6 +39,13 @@ router.get("/", async (req, res) => {
   if (req.query.categories) {
     queryParams = { category: req.query.categories.split(",") };
   }
+
+  if (req.query.search) {
+    const searchQuery = new RegExp(req.query.search, "i");
+
+    queryParams.$or = [{ name: searchQuery }, { brand: searchQuery }];
+  }
+
   try {
     const productList = await Product.find(queryParams).populate("category");
 
@@ -361,9 +368,7 @@ router.get("/get/featured/:count?", async (req, res) => {
       +count
     );
     if (featuredProducts) {
-      return res
-        .status(200)
-        .send({ success: true, featuredProducts: featuredProducts });
+      return res.status(200).send(featuredProducts);
     } else {
       return res
         .status(404)

@@ -18,6 +18,8 @@ import { TagModule } from 'primeng/tag';
 import { InputMaskModule } from 'primeng/inputmask';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { FieldsetModule } from 'primeng/fieldset';
+import { CheckboxModule } from 'primeng/checkbox';
+import { RatingModule } from 'primeng/rating';
 
 @NgModule({
     exports: [
@@ -37,7 +39,9 @@ import { FieldsetModule } from 'primeng/fieldset';
         TagModule,
         InputMaskModule,
         ProgressSpinnerModule,
-        FieldsetModule
+        FieldsetModule,
+        CheckboxModule,
+        RatingModule
     ],
     providers: [MessageService, ConfirmationService]
 })

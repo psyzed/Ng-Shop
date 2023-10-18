@@ -1,18 +1,21 @@
 //Base
+@import '~normalize.css/normalize.css';
 @import './base/colors.scss';
 @import './base/fonts.scss';
 @import './base/mixins.scss';
-@import './base/config.scss';
 
 //External Libs
 @import '~primeicons/primeicons.css';
 @import '~primeng/resources/themes/saga-blue/theme.css';
 @import '~primeng/resources/primeng.min.css';
 @import '~primeflex/primeflex.css';
+@import '~animate.css/animate.css';
+
+@import './base/config.scss';
 
 //Pages
 @import './apps-styles/ng-shop/pages/home-page.scss';
-@import './apps-styles/ng-shop/pages/products-list-page.scss';
+@import './libs/products/products.scss';
 
 //Shared
 @import './apps-styles/ng-shop/shared/header.scss';
@@ -20,3 +23,10 @@
 
 //Libs
 @import './libs/ui/ui.scss';
+
+.container {
+    width: 1200px;
+    padding: 15px;
+    margin: 0 auto;
+    background-color: var(--surface-100);
+}

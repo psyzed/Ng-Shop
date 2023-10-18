@@ -36,11 +36,7 @@
                         <tr>
                             <td class="text-center">{{ category.name }}</td>
                             <td class="text-center">
-                                <i
-                                    style="font-size: 2rem"
-                                    class="pi"
-                                    [ngClass]="'pi-' + category.icon"
-                                ></i>
+                                <i style="font-size: 2rem" class="pi" [ngClass]="'pi-' + category.icon"></i>
                             </td>
                             <td class="text-center">
                                 <div
@@ -72,4 +68,5 @@
     [style]="{ width: '50vw' }"
     [baseZIndex]="10000"
     rejectButtonStyleClass="p-button-text"
+    [rejectVisible]="false"
 ></p-confirmDialog>

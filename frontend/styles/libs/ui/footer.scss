@@ -1,0 +1,18 @@
+.footer-container {
+    background-color: var(--surface-200);
+    height: 50px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0;
+    padding: 20px;
+
+    .copy-rights-info {
+        color: var(--surface-700);
+    }
+
+    .pi {
+        margin: 0 10px;
+    }
+}

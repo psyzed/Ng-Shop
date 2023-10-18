@@ -1,6 +1,7 @@
 export interface Category {
-    _id?: string;
+    _id: string;
     name: string;
     icon: string;
     color: string;
+    checked?: boolean;
 }
