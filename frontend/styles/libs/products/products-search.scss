@@ -6,20 +6,32 @@
     width: 275px;
     height: 35px;
 
-    .pi {
-        width: 25px;
-        font-size: 1.3rem;
-        color: $primary-color;
-    }
+    form {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .icon {
+            display: inline-block;
+        }
 
-    &-input {
-        height: 35px;
-        background-color: transparent;
-        color: var(--surface-600);
-        border: none;
+        .pi {
+            width: 25px;
+            font-size: 1.3rem;
+            color: $primary-color;
+        }
 
-        &:focus {
-            outline: none;
+        .products-search-input {
+            height: 35px;
+            background-color: transparent;
+            color: var(--surface-600);
+            border: none;
+
+            &:focus {
+                outline: none;
+            }
+        }
+        .products-search-loading {
+            color: var(--surface-600);
         }
     }
 }

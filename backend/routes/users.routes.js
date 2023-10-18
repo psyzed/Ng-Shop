@@ -256,7 +256,6 @@ router.delete("/:id", async (req, res) => {
     if (user) {
       return res.status(200).send({ success: true, message: "User Deleted!" });
     } else {
-      console.log("here");
       logger.usersRoutesErrorLogger.log("error", {
         requestType: "DELETE",
         message: "Unable to find user",

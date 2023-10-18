@@ -18,7 +18,6 @@ router.get(`/`, async (req, res) => {
     }
     return res.status(200).send(categoryList);
   } catch (error) {
-    console.log(error);
     logger.categoriesRoutesErrorLogger.log(
       "error",
       "Server Error while fetching category list"
@@ -50,7 +49,6 @@ router.get("/:id", async (req, res) => {
     }
     return res.status(200).send(category);
   } catch (error) {
-    console.log(error);
     logger.categoriesRoutesErrorLogger.log(
       "error",
       "Server Error finding a category by id"

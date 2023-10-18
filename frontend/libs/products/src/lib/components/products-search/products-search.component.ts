@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Subject, debounceTime, distinctUntilChanged, filter, map, switchMap, takeUntil } from 'rxjs';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { Subject, debounceTime, distinctUntilChanged, filter, map, switchMap, takeUntil, tap } from 'rxjs';
 import { ProductsService } from '../../services/products/products.service';
 import { Product } from '../../models/product.model';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'products-search',
@@ -11,10 +12,14 @@ import { Product } from '../../models/product.model';
 })
 export class ProductsSearchComponent implements OnInit, OnDestroy {
     public searchForm!: FormGroup;
+    public searchResults: Product[] = [];
+    public showDropDown = false;
+    public isLoading = false;
+    private _destroyed$ = new Subject<void>();
 
     private _formBuilder = inject(FormBuilder);
     private _productsService = inject(ProductsService);
-    private _destroyed$ = new Subject<void>();
+    private _router = inject(Router);
 
     ngOnInit(): void {
         this._initForm();
@@ -28,9 +33,12 @@ export class ProductsSearchComponent implements OnInit, OnDestroy {
     }
 
     private _onSearchProduct(): void {
-        this.searchForm
-            .get('searchTerm')!
-            .valueChanges.pipe(
+        this.formCotrol.valueChanges
+            .pipe(
+                tap((value) => {
+                    value.length > 2 ? (this.isLoading = true) : (this.isLoading = false);
+                    if (value.length === 0) this.showDropDown = false;
+                }),
                 debounceTime(750),
                 distinctUntilChanged(),
                 map((value) => value.trim()),
@@ -42,12 +50,24 @@ export class ProductsSearchComponent implements OnInit, OnDestroy {
             )
             .subscribe(
                 (res: Product[]) => {
-                    console.log(res);
+                    this.searchResults = res;
+                    this.isLoading = false;
+                    this.showDropDown = res.length > 0;
                 },
                 (error) => {
-                    console.log(error);
+                    this.isLoading = false;
                 }
             );
+    }
+
+    public onSelectProduct(productId: string): void {
+        this.showDropDown = false;
+        this.formCotrol.setValue('');
+        this._router.navigate(['product', productId]);
+    }
+
+    private get formCotrol(): FormControl {
+        return <FormControl>this.searchForm.get('searchTerm')!;
     }
 
     ngOnDestroy(): void {

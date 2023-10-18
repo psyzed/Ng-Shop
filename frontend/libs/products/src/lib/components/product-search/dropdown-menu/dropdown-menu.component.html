@@ -1,0 +1,10 @@
+<div class="dropdown">
+    <ul class="dropdown-list">
+        <li class="dropdown-list-item" *ngFor="let product of products" (click)="onSelectProduct(product.id)">
+            <span>
+                {{ product.name }}
+            </span>
+            <span>{{ product.price | currency : '€' }}</span>
+        </li>
+    </ul>
+</div>

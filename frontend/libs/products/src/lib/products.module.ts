@@ -10,6 +10,7 @@ import { ProductsListComponent } from './pages/products-list/products-list.compo
 import { ProductsRoutingModule } from './products-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductDetailPageComponent } from './pages/product-detail-page/product-detail-page.component';
+import { DropdownMenuComponent } from './components/product-search/dropdown-menu/dropdown-menu.component';
 
 @NgModule({
     imports: [
@@ -27,7 +28,8 @@ import { ProductDetailPageComponent } from './pages/product-detail-page/product-
         ProductItemComponent,
         FeaturedProductsComponent,
         ProductsListComponent,
-        ProductDetailPageComponent
+        ProductDetailPageComponent,
+        DropdownMenuComponent
     ],
     exports: [
         ProductsSearchComponent,
@@ -35,7 +37,8 @@ import { ProductDetailPageComponent } from './pages/product-detail-page/product-
         FeaturedProductsComponent,
         ProductItemComponent,
         ProductsListComponent,
-        ProductDetailPageComponent
+        ProductDetailPageComponent,
+        DropdownMenuComponent
     ]
 })
 export class ProductsModule {}

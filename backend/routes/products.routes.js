@@ -62,7 +62,6 @@ router.get("/", async (req, res) => {
       res.send(productList);
     }
   } catch (error) {
-    console.log(error);
     logger.productsRoutesErrorLogger.log(
       "server-error",
       "Server error while fetching products list"
@@ -159,14 +158,12 @@ router.post("/", uploadOptions.single("image"), async (req, res) => {
     return res.status(200).send(product);
   } catch (error) {
     logger.productsRoutesErrorLogger.log("server-error", "Server Error");
-    console.log(error);
     return res.status(500).send({ error: error, message: "Server Error" });
   }
 });
 
 //Updating a product
 router.put("/:id", uploadOptions.single("image"), async (req, res) => {
-  console.log(req.params.id);
   if (!mongoose.isValidObjectId(req.params.id)) {
     logger.productsRoutesErrorLogger.log(
       "id-error",

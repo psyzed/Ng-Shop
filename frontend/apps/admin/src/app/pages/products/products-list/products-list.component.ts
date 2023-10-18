@@ -51,7 +51,6 @@ export class ProductsListComponent implements OnInit {
                     .pipe(take(1))
                     .subscribe(
                         (product: Product) => {
-                            console.log(product.name);
                             this.toastMessageService.add({
                                 severity: 'success',
                                 summary: 'Success',

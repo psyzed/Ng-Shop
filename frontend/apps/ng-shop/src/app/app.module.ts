@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule } from '@angular/router';
+import { RouteReuseStrategy, RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ProductsModule } from '@frontend/products';
 
@@ -13,7 +13,6 @@ import { UiModule } from '@frontend/ui';
 import { AccordionModule } from 'primeng/accordion';
 import { NavComponent } from './shared/nav/nav.component';
 import { ProductsRoutingModule } from 'libs/products/src/lib/products-routing.module';
-
 @NgModule({
     declarations: [AppComponent, HomePageComponent, HeaderComponent, FooterComponent, NavComponent],
     imports: [
@@ -25,7 +24,6 @@ import { ProductsRoutingModule } from 'libs/products/src/lib/products-routing.mo
         ProductsRoutingModule,
         RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' })
     ],
-    providers: [],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

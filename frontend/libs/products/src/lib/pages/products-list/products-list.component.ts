@@ -92,7 +92,6 @@ export class ProductsListComponent implements OnInit {
         if (categoryIndex !== -1) {
             this.categories[categoryIndex].checked = true;
             this.categories = [...this.categories];
-            console.log(this.categories);
         }
     }
 }

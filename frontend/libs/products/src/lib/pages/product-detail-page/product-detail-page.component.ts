@@ -1,8 +1,8 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Product } from '../../models/product.model';
 import { ProductsService } from '@frontend/products';
 import { ActivatedRoute, Router } from '@angular/router';
-import { take, tap } from 'rxjs';
+import { Subject, switchMap, takeUntil } from 'rxjs';
 import { ConfirmationService } from 'primeng/api';
 
 @Component({
@@ -10,9 +10,11 @@ import { ConfirmationService } from 'primeng/api';
     templateUrl: './product-detail-page.component.html',
     styles: []
 })
-export class ProductDetailPageComponent implements OnInit {
+export class ProductDetailPageComponent implements OnInit, OnDestroy {
     public product: Product = {} as Product;
     public productQuantity = 0;
+
+    private _destoyed$ = new Subject<void>();
 
     private _activatedRoute = inject(ActivatedRoute);
     private _productService = inject(ProductsService);
@@ -32,21 +34,21 @@ export class ProductDetailPageComponent implements OnInit {
     }
 
     private _getProduct(): void {
-        const productId = this._getProductIdFromRoute;
-        this._productService
-            .getProductById(productId)
+        this._activatedRoute.params
             .pipe(
-                take(1),
-                tap((product: Product) => {
-                    this.product = product;
-                })
+                takeUntil(this._destoyed$),
+                switchMap((params) => this._productService.getProductById(params['productId']))
             )
             .subscribe(
-                () => {},
+                (product) => {
+                    this.product = product;
+                },
                 (error) => {
+                    // Error handling
+                    console.error('An error occurred:', error);
                     this._confirmationService.confirm({
-                        message: 'Press ok to navigate to the products page',
-                        header: 'Product not found',
+                        message: 'An unexpected error occurred. Press ok to navigate to the products page.',
+                        header: 'Error retrieving product',
                         icon: 'pi pi-exclamation-triangle',
                         accept: () => {
                             this._router.navigate(['products']);
@@ -56,7 +58,8 @@ export class ProductDetailPageComponent implements OnInit {
             );
     }
 
-    private get _getProductIdFromRoute(): string {
-        return this._activatedRoute.snapshot.paramMap.get('productId')!;
+    ngOnDestroy(): void {
+        this._destoyed$.next();
+        this._destoyed$.complete();
     }
 }
