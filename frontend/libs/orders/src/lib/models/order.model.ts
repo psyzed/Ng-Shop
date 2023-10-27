@@ -12,7 +12,7 @@ export interface OrderApiResponse {
     order: Order;
 }
 export interface Order {
-    _id: string;
+    _id?: string;
     orderItems: OrderItem[];
     shippingAddress1: string;
     shippingAddress2: string;
@@ -21,9 +21,9 @@ export interface Order {
     country: string;
     phone: string;
     status: number;
-    totalPrice: number;
+    totalPrice?: number;
     user: User;
-    dateOrdered: Date;
+    dateOrdered: string;
 }
 
 export interface OrderStatus {

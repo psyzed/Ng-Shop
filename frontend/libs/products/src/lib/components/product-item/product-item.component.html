@@ -1,8 +1,18 @@
 <div class="product-item" *ngIf="product">
     <div class="product-item-wrapper">
-        <img (click)="onNavigateToProduct(product.id)" [src]="product.image" class="image" [alt]="product.name" />
+        <img
+            (click)="onNavigateToProduct(product._id)"
+            [src]="product.image"
+            class="image"
+            [alt]="product.name"
+        />
         <h4 class="name">{{ product.name }}</h4>
         <h5 class="price">{{ product.price | currency : '€' }}</h5>
-        <p-button styleClass="cart-btn" label="Add to cart" icon="pi pi-shopping-cart"></p-button>
+        <p-button
+            styleClass="cart-btn"
+            label="Add to cart"
+            icon="pi pi-shopping-cart"
+            (onClick)="onAddToCart(product)"
+        ></p-button>
     </div>
 </div>

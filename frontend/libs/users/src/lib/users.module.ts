@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
-import { NgPrimeModule } from '@frontend/ui';
+import { UiModule } from '@frontend/ui';
 import { ReactiveFormsModule } from '@angular/forms';
 import { UsersRoutingModule } from './users.routes';
 
@@ -10,7 +10,7 @@ import { UsersRoutingModule } from './users.routes';
     imports: [
         CommonModule,
         RouterModule,
-        NgPrimeModule,
+        UiModule,
         ReactiveFormsModule,
         UsersRoutingModule
     ],

@@ -6,10 +6,11 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 })
 export class GalleryComponent implements OnChanges {
     @Input() public images: string[];
+    @Input() public mainImage: string;
     public selectedImageUrl = '';
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (changes.images) {
+        if (changes['images']) {
             this._setMainImage();
         }
     }
@@ -21,6 +22,8 @@ export class GalleryComponent implements OnChanges {
     private _setMainImage(): void {
         if (this.images && this.images.length > 0) {
             this.selectedImageUrl = this.images[0];
+        } else {
+            this.selectedImageUrl = this.mainImage;
         }
     }
 }

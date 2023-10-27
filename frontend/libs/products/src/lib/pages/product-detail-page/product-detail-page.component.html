@@ -1,14 +1,25 @@
 <div class="grid product-page">
-    <div class="col-6"><ui-gallery [images]="product.images"></ui-gallery></div>
+    <div class="col-6">
+        <ui-gallery
+            [mainImage]="product.image"
+            [images]="product.images"
+        ></ui-gallery>
+    </div>
     <div class="col-6 product">
         <h2 class="product-title">{{ product.name }}</h2>
         <p class="product-desc">{{ product.description }}</p>
         <div class="product-rating">
-            <p-rating [(ngModel)]="product.rating" [disabled]="true" [cancel]="false"></p-rating>
+            <p-rating
+                [(ngModel)]="product.rating"
+                [disabled]="true"
+                [cancel]="false"
+            ></p-rating>
         </div>
         <div class="product-price">
             {{ product.price | currency : '€' }}
-            <span class="product-price-before">{{ product.price * 1.1 | currency : '€' }}</span>
+            <span class="product-price-before">{{
+                product.price * 1.1 | currency : '€'
+            }}</span>
         </div>
         <div class="product-quantity">
             <label for="quantity">Quantity</label>
@@ -27,13 +38,13 @@
                 label="Add to Cart"
                 styleClass="p-button-rounded btn"
                 icon="pi pi-shopping-cart"
-                (onClick)="onAddToCart(product.id)"
+                (onClick)="onAddToCart(product)"
             ></p-button>
             <p-button
                 label="Buy Now"
                 styleClass="p-button-rounded btn"
                 icon="pi pi-check"
-                (onClick)="onBuyNow(product.id)"
+                (onClick)="onBuyNow(product._id)"
             ></p-button>
         </div>
     </div>

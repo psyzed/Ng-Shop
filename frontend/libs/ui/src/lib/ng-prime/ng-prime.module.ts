@@ -20,6 +20,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { FieldsetModule } from 'primeng/fieldset';
 import { CheckboxModule } from 'primeng/checkbox';
 import { RatingModule } from 'primeng/rating';
+import { BadgeModule } from 'primeng/badge';
 
 @NgModule({
     exports: [
@@ -41,7 +42,8 @@ import { RatingModule } from 'primeng/rating';
         ProgressSpinnerModule,
         FieldsetModule,
         CheckboxModule,
-        RatingModule
+        RatingModule,
+        BadgeModule
     ],
     providers: [MessageService, ConfirmationService]
 })

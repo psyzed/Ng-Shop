@@ -22,8 +22,8 @@
 
         .products-search-input {
             height: 35px;
-            background-color: transparent;
-            color: var(--surface-600);
+            background-color: transparent !important;
+            color: var(--surface-600) !important;
             border: none;
 
             &:focus {

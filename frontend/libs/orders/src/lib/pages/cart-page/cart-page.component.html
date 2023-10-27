@@ -1,0 +1,38 @@
+<div class="cart-page">
+    <div class="grid">
+        <div class="col-8">
+            <div class="back-btn">
+                <p-button
+                    label="Continue Shopping"
+                    icon="pi pi-arrow-left"
+                    (onClick)="onNavigate('/products')"
+                ></p-button>
+            </div>
+            <div class="cart-page-heading">
+                <h4>My Cart: {{ products.length }} Item(s)</h4>
+            </div>
+            <div class="cart-shipping">
+                <p *ngIf="products.length > 0">
+                    Shipping after the payment, Delivery time is 1 to 4 working
+                    days.
+                </p>
+            </div>
+            <orders-cart-item
+                *ngFor="let product of products; let i = index"
+                [cartItem]="product"
+                [itemIndex]="i + 1"
+                (onDeleteItemFromCart)="onDeleteItemFromCart($event)"
+                (onUpdateItemQuantity)="onUpdateItemQuantity($event)"
+            ></orders-cart-item>
+        </div>
+        <div class="col-4 align-self-start">
+            <orders-cart-summary
+                [totalItemsPrice]="totalItemsPrice"
+                [totalOrderPrice]="totalOrderPrice"
+                [shippingPrice]="shippingCosts"
+                [isShippingFree]="isShippingFree"
+                (confirm)="onNavigate('/checkout')"
+            ></orders-cart-summary>
+        </div>
+    </div>
+</div>

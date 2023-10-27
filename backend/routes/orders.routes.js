@@ -90,11 +90,11 @@ router.get(`/:id`, async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  let orderItems = Promise.all(
+  const orderItemsIds = Promise.all(
     req.body.orderItems.map(async (orderItem) => {
       let newOrderItem = new OrderItem({
-        product: orderItem.product,
         quantity: orderItem.quantity,
+        product: orderItem._id,
       });
 
       newOrderItem = await newOrderItem.save();
@@ -102,11 +102,10 @@ router.post("/", async (req, res) => {
       return newOrderItem._id;
     })
   );
-
-  const orderItemsPromiseResolved = await orderItems;
+  const orderItemsIdsResolved = await orderItemsIds;
 
   const totalPrices = await Promise.all(
-    orderItemsPromiseResolved.map(async (orderItemId) => {
+    orderItemsIdsResolved.map(async (orderItemId) => {
       const orderItem = await OrderItem.findById(orderItemId).populate(
         "product",
         "price"
@@ -115,11 +114,10 @@ router.post("/", async (req, res) => {
       return totalPrice;
     })
   );
-
   let totalPrice = totalPrices.reduce((a, b) => a + b, 0);
 
   let order = new Order({
-    orderItems: orderItemsPromiseResolved,
+    orderItems: orderItemsIdsResolved,
     shippingAddress1: req.body.shippingAddress1,
     shippingAddress2: req.body.shippingAddress2,
     city: req.body.city,
@@ -128,7 +126,7 @@ router.post("/", async (req, res) => {
     phone: req.body.phone,
     status: req.body.status,
     totalPrice: totalPrice,
-    user: req.body.user,
+    user: req.body.user.id,
   });
 
   order = await order.save();

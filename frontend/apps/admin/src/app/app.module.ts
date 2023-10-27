@@ -5,8 +5,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
-import { NxWelcomeComponent } from './nx-welcome.component';
-import { RoutingModule, appRoutes } from './app-routing.module';
+import { RoutingModule } from './app-routing.module';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ShellComponent } from './shared/shell/shell.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
@@ -15,7 +14,7 @@ import { CategoriesFormComponent } from './pages/categories/categories-form/cate
 import { ProductsListComponent } from './pages/products/products-list/products-list.component';
 import { ProductsFormComponent } from './pages/products/products-form/products-form.component';
 
-import { NgPrimeModule } from '@frontend/ui';
+import { UiModule } from '@frontend/ui';
 import { UsersListComponent } from './pages/users/users-list/users-list.component';
 import { UsersFormComponent } from './pages/users/users-form/users-form.component';
 import { OrdersListComponent } from './pages/orders/orders-list/orders-list.component';
@@ -25,7 +24,6 @@ import { JwtInterceptor, UsersModule } from '@frontend/users';
 @NgModule({
     declarations: [
         AppComponent,
-        NxWelcomeComponent,
         DashboardComponent,
         ShellComponent,
         SidebarComponent,
@@ -44,7 +42,7 @@ import { JwtInterceptor, UsersModule } from '@frontend/users';
         ReactiveFormsModule,
         FormsModule,
         HttpClientModule,
-        NgPrimeModule,
+        UiModule,
         UsersModule,
         RoutingModule
     ],

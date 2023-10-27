@@ -1,0 +1,13 @@
+.cart-page {
+    min-height: 500px;
+
+    button {
+        @include red-btn;
+    }
+
+    .cart {
+        &-shipping {
+            color: var(--green-700);
+        }
+    }
+}

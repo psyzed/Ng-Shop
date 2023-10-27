@@ -7,6 +7,7 @@ import {
     Order,
     OrderApiResponse
 } from '../models/order.model';
+import { ApiResponse, Product } from '@frontend/products';
 
 @Injectable({ providedIn: 'root' })
 export class OrdersService {
@@ -50,6 +51,13 @@ export class OrdersService {
     getTotalSales(): Observable<DashBoardTotals> {
         return this.http.get<DashBoardTotals>(
             `${this._apiURLOrders}/totalsales`
+        );
+    }
+
+    getProductsByIds(productIds: string[]): Observable<ApiResponse<Product[]>> {
+        return this.http.post<ApiResponse<Product[]>>(
+            `${environment.apiURL}products/getProductsByIds`,
+            { ids: productIds }
         );
     }
 }

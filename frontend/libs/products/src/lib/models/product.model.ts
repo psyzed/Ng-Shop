@@ -4,8 +4,13 @@ export interface ProductApiResponse {
     totalProducts?: number;
 }
 
+export interface ApiResponse<T> {
+    message: string;
+    data: T;
+}
+
 export interface Product {
-    id: string;
+    _id: string;
     image: string;
     brand: string;
     price: number;
@@ -20,6 +25,7 @@ export interface Product {
     richDescription: string;
     images: string[];
     dateCreated: string;
+    quantity?: number;
 }
 
 export interface ProductFormData extends FormData {

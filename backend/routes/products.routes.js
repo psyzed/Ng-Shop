@@ -106,6 +106,55 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+//Post Request for getting multiple products by id
+router.post("/getProductsByIds", async (req, res) => {
+  const ids = req.body.ids;
+  if (!ids || ids.length === 0) {
+    logger.productsRoutesErrorLogger.log(
+      "error",
+      "No ids provided when trying to find multiple products by id"
+    );
+    return res.status(400).send({ message: "No ids provided." });
+  }
+
+  const verifiedIds = ids.filter((id) => mongoose.Types.ObjectId.isValid(id));
+  let warningMessage = "";
+
+  if (verifiedIds.length === 0) {
+    logger.productsRoutesErrorLogger.log(
+      "error",
+      "Invalid mongo ids provided when trying to find multiple products by id"
+    );
+    return res.status(400).send({ message: "Invalid ids provided." });
+  }
+
+  if (ids.length !== verifiedIds.length) {
+    logger.productsRoutesErrorLogger.log(
+      "error",
+      "Some invalid mongo ids provided when trying to find multiple products by id"
+    );
+    warningMessage = "Some ids are invalid.";
+  }
+
+  try {
+    const products = await Product.find({ _id: { $in: verifiedIds } }, "name price image");
+
+    if (!products || products.length === 0) {
+      return res.status(404).send({ message: "No products found!" });
+    }
+    res.status(200).send({ message: warningMessage, data: products });
+  } catch (error) {
+    logger.productsRoutesErrorLogger.log(
+      "error",
+      "Error while fetching multiple products by id"
+    );
+    return res.status(500).send({
+      success: false,
+      message: "Something went wrong, please try again later!",
+    });
+  }
+});
+
 //Adding a new product
 router.post("/", uploadOptions.single("image"), async (req, res) => {
   try {

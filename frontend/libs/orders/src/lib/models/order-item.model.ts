@@ -1,6 +1,7 @@
 import { Product } from '@frontend/products';
 
 export interface OrderItem {
-    product: Product;
+    _id: string;
     quantity: number;
+    product?: Product;
 }

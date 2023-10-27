@@ -1,0 +1,27 @@
+<div class="order-summary">
+    <h3>Order Summary</h3>
+    <div class="summary-price">
+        <span>Items Price</span>
+        <span>{{ totalItemsPrice | currency : '€' }}</span>
+    </div>
+    <div class="summary-price">
+        <span>Packaging & Shipping</span>
+        <span class="free" *ngIf="isShippingFree">Free</span>
+        <span *ngIf="!isShippingFree">{{
+            shippingPrice | currency : '€'
+        }}</span>
+    </div>
+    <div class="summary-checkout">
+        <div class="summary-price">
+            <span>Total Price</span>
+            <span>{{ totalOrderPrice | currency : '€' }}</span>
+        </div>
+        <div class="checkout-btn">
+            <p-button
+                [disabled]="totalOrderPrice === 0 || !isBtnEnabled"
+                [label]="btnText"
+                (onClick)="onConfirm()"
+            ></p-button>
+        </div>
+    </div>
+</div>

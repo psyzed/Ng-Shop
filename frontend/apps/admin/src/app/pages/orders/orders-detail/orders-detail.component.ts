@@ -36,7 +36,7 @@ export class OrdersDetailComponent implements OnInit {
     onStatusChange(event: any) {
         const orderStatus: { id: number; name: string } = event.value;
         this.ordersService
-            .updateOrder({ status: orderStatus.id }, this.order._id)
+            .updateOrder({ status: orderStatus.id }, this.order._id!)
             .pipe(take(1))
             .subscribe(
                 (res) => {

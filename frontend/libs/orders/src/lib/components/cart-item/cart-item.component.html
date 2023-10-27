@@ -1,0 +1,40 @@
+<div class="cart-item">
+    <span class="cart-item-index">{{ itemIndex }}</span>
+    <div class="grid p-fluid">
+        <div class="col-2 cart-item-image">
+            <img [src]="cartItem.image" [alt]="cartItem.name" />
+        </div>
+        <div class="col-7">
+            <div class="cart-item-name">{{ cartItem.name }}</div>
+            <div class="cart-item-price">
+                {{ cartItem.price | currency : '€' }}
+            </div>
+            <div class="cart-item-delete-btn">
+                <p-button
+                    icon="pi pi-trash"
+                    (onClick)="onDeleteItem(cartItem._id)"
+                ></p-button>
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="cart-item-quantity">
+                <p-inputNumber
+                    mode="decimal"
+                    [showButtons]="true"
+                    [inputId]="cartItem._id"
+                    [min]="1"
+                    [max]="100"
+                    [(ngModel)]="cartItem.quantity"
+                    (ngModelChange)="updateItemQuantity($event, cartItem._id)"
+                >
+                </p-inputNumber>
+            </div>
+            <div class="cart-item-subtotal">
+                Subtotal:
+                <span class="cart-item-value">{{
+                    subtotal | currency : '€'
+                }}</span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,189 @@
+<div class="checkout-page">
+    <div class="checkout-page-back-btn">
+        <p-button
+            label="Back to cart"
+            icon="pi pi-arrow-left"
+            (onClick)="onNavigate('/cart')"
+        ></p-button>
+    </div>
+    <div class="grid checkout-page-form">
+        <div class="col-9">
+            <form [formGroup]="userForm">
+                <div class="formgrid grid">
+                    <div class="field col-4">
+                        <label for="name">Name</label>
+                        <input
+                            formControlName="name"
+                            type="text"
+                            class="w-full"
+                            pInputText
+                        />
+                        <small
+                            *ngIf="
+                                userFormControls['name'].invalid && isSubmited
+                            "
+                            class="p-error"
+                            >Name is required</small
+                        >
+                    </div>
+                    <div class="field col-4">
+                        <label for="email">E-Mail</label>
+                        <input
+                            formControlName="email"
+                            type="text"
+                            class="w-full"
+                            pInputText
+                        />
+                        <small
+                            *ngIf="
+                                userFormControls['email'].invalid && isSubmited
+                            "
+                            class="p-error"
+                            ><span
+                                *ngIf="
+                                    userFormControls['email'].hasError(
+                                        'required'
+                                    )
+                                "
+                                >Email is required</span
+                            ><span
+                                *ngIf="
+                                    userFormControls['email'].hasError('email')
+                                "
+                                >Email is Invalid</span
+                            ></small
+                        >
+                    </div>
+                    <div class="field col-4">
+                        <label for="phone">Phone</label>
+                        <p-inputMask
+                            mask="6999999999"
+                            formControlName="phone"
+                            placeholder="6999999999"
+                            styleClass="w-full"
+                        ></p-inputMask>
+                        <small
+                            *ngIf="
+                                userFormControls['phone'].invalid && isSubmited
+                            "
+                            class="p-error"
+                            >Phone is required</small
+                        >
+                    </div>
+                    <div class="formgrid grid">
+                        <div class="field col-4">
+                            <label for="street">Street</label>
+                            <input
+                                formControlName="street"
+                                type="text"
+                                pInputText
+                                class="w-full"
+                            />
+                            <small
+                                *ngIf="
+                                    userFormControls['street'].invalid &&
+                                    isSubmited
+                                "
+                                class="p-error"
+                                >Street is required</small
+                            >
+                        </div>
+                        <div class="field col-4">
+                            <label for="apartment">Apartment</label>
+                            <input
+                                formControlName="apartment"
+                                type="text"
+                                pInputText
+                                class="w-full"
+                            />
+                            <small
+                                *ngIf="
+                                    userFormControls['apartment'].invalid &&
+                                    isSubmited
+                                "
+                                class="p-error"
+                                >Apartment is required</small
+                            >
+                        </div>
+                        <div class="field col-4">
+                            <label for="zip">Zip Code</label>
+                            <input
+                                formControlName="zip"
+                                type="text"
+                                pInputText
+                                class="w-full"
+                            />
+                            <small
+                                *ngIf="
+                                    userFormControls['zip'].invalid &&
+                                    isSubmited
+                                "
+                                class="p-error"
+                                >Zipcode is required</small
+                            >
+                        </div>
+                        <div class="field col-4">
+                            <label for="city">City</label>
+                            <input
+                                formControlName="city"
+                                type="text"
+                                pInputText
+                                class="w-full"
+                            />
+                            <small
+                                *ngIf="
+                                    userFormControls['city'].invalid &&
+                                    isSubmited
+                                "
+                                class="p-error"
+                                >City is required</small
+                            >
+                        </div>
+                        <div class="field col-4 flex flex-column">
+                            <div class="text-center m-1">
+                                <label for="country">Country</label>
+                            </div>
+                            <p-dropdown
+                                styleClass="w-full"
+                                [options]="countries"
+                                formControlName="country"
+                                optionLabel="name"
+                                optionValue="id"
+                                [filter]="true"
+                                filterBy="name"
+                                [showClear]="true"
+                                placeholder="Select a Country"
+                            ></p-dropdown>
+                            <small
+                                *ngIf="
+                                    userFormControls['country'].invalid &&
+                                    isSubmited
+                                "
+                                class="p-error"
+                                >Country is required</small
+                            >
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-3">
+            <orders-cart-summary
+                [isShippingFree]="isShippingFree"
+                [totalItemsPrice]="totalItemsPrice"
+                [shippingPrice]="shippingCosts"
+                [totalOrderPrice]="totalOrderPrice"
+                btnText="Place Order"
+                [isBtnEnabled]="userForm.valid"
+                (confirm)="onPlaceOrder()"
+            ></orders-cart-summary>
+        </div>
+    </div>
+</div>
+<p-confirmDialog
+    [style]="{ width: '50vw' }"
+    [baseZIndex]="10000"
+    rejectButtonStyleClass="p-button-text"
+    [rejectVisible]="false"
+    acceptLabel="OK"
+></p-confirmDialog>
