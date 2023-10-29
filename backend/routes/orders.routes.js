@@ -123,7 +123,7 @@ router.post("/", async (req, res) => {
     city: req.body.city,
     zip: req.body.zip,
     country: req.body.country,
-    phone: req.body.phone,
+    phone: req.body.phone.replace(/\D+/g, ""),
     status: req.body.status,
     totalPrice: totalPrice,
     user: req.body.user.id,

@@ -23,7 +23,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     public shippingCosts: number = 0;
     public totalOrderPrice = 0;
     public orderItems: OrderItem[] = [];
-    public user: User = { id: '65395cc644014a39b0deace3' } as User;
+    public user: User = {} as User;
 
     private destroyed$ = new Subject<void>();
 
@@ -133,6 +133,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.destroyed$))
             .subscribe((user) => {
                 if (user) {
+                    this.user = user;
                     this.userForm.patchValue({
                         name: user.name,
                         email: user.email,
