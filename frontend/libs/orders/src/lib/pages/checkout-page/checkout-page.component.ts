@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -6,7 +6,7 @@ import { User, UsersService } from '@frontend/users';
 import { OrderItem } from '../../models/order-item.model';
 import { Order } from '../../models/order.model';
 import { CartService, OrdersService } from '@frontend/orders';
-import { take } from 'rxjs';
+import { Subject, take, takeUntil } from 'rxjs';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
@@ -14,7 +14,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     templateUrl: './checkout-page.component.html',
     styles: []
 })
-export class CheckoutPageComponent implements OnInit {
+export class CheckoutPageComponent implements OnInit, OnDestroy {
     public userForm!: FormGroup;
     public countries: { id: string; name: string }[] = [];
     public isSubmited = false;
@@ -24,6 +24,8 @@ export class CheckoutPageComponent implements OnInit {
     public totalOrderPrice = 0;
     public orderItems: OrderItem[] = [];
     public user: User = { id: '65395cc644014a39b0deace3' } as User;
+
+    private destroyed$ = new Subject<void>();
 
     private _router = inject(Router);
     private _formBuilder = inject(FormBuilder);
@@ -38,6 +40,7 @@ export class CheckoutPageComponent implements OnInit {
         this._initForm();
         this._getCountries();
         this._getDataFromRouter();
+        this._fillOrderForm();
     }
 
     onNavigate(url: string) {
@@ -124,7 +127,32 @@ export class CheckoutPageComponent implements OnInit {
         this.orderItems = data.products;
     }
 
+    private _fillOrderForm(): void {
+        this._userService
+            .getCurrentUser()
+            .pipe(takeUntil(this.destroyed$))
+            .subscribe((user) => {
+                if (user) {
+                    this.userForm.patchValue({
+                        name: user.name,
+                        email: user.email,
+                        phone: user.phone,
+                        street: user.street,
+                        apartment: user.apartment,
+                        zip: user.zip,
+                        city: user.city,
+                        country: user.country
+                    });
+                }
+            });
+    }
+
     get userFormControls() {
         return this.userForm.controls;
+    }
+
+    ngOnDestroy(): void {
+        this.destroyed$.next();
+        this.destroyed$.complete();
     }
 }

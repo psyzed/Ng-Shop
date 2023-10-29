@@ -4,6 +4,7 @@ import { environment } from '@env/environment';
 import { Observable } from 'rxjs';
 import { User, UserApiResponse } from '../../models/user.model';
 import * as countriesLib from 'i18n-iso-countries';
+import { UsersFacade } from '@frontend/users';
 
 declare const require: any;
 @Injectable({
@@ -11,7 +12,7 @@ declare const require: any;
 })
 export class UsersService {
     apiURLUsers = `${environment.apiURL}users`;
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private usersFacade: UsersFacade) {
         countriesLib.registerLocale(
             require('i18n-iso-countries/langs/en.json')
         );
@@ -51,5 +52,17 @@ export class UsersService {
 
     getTotalUsers(): Observable<UserApiResponse> {
         return this.http.get<UserApiResponse>(`${this.apiURLUsers}/totalusers`);
+    }
+
+    initUserSession(): void {
+        this.usersFacade.buildUserSession();
+    }
+
+    getCurrentUser(): Observable<User> {
+        return this.usersFacade.user$;
+    }
+
+    isUserAuth(): Observable<boolean> {
+        return this.usersFacade.isAuth$;
     }
 }

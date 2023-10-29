@@ -14,7 +14,27 @@ export class LocalstorageService {
         return localStorage.getItem(TOKEN);
     }
 
+    getUserIdFromToken(): string {
+        const token = this.getJWTToken();
+        if (token) {
+            const tokenPayload = JSON.parse(atob(token.split('.')[1]));
+            return tokenPayload.userId;
+        } else {
+            return '';
+        }
+    }
+
     removeJwtToken(): void {
         localStorage.removeItem(TOKEN);
+    }
+
+    isValidToken(): boolean {
+        const token = this.getJWTToken();
+        if (token) {
+            const tokenPayload = JSON.parse(atob(token.split('.')[1]));
+            return Math.floor(Date.now() / 1000) <= tokenPayload.exp;
+        } else {
+            return false;
+        }
     }
 }

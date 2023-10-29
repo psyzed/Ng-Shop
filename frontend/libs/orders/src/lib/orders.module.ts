@@ -9,6 +9,7 @@ import { CartItemComponent } from './components/cart-item/cart-item.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CartSummaryComponent } from './components/cart-summary/cart-summary.component';
 import { CheckoutPageComponent } from './pages/checkout-page/checkout-page.component';
+import { UsersModule } from '@frontend/users';
 
 @NgModule({
     imports: [
@@ -16,7 +17,8 @@ import { CheckoutPageComponent } from './pages/checkout-page/checkout-page.compo
         FormsModule,
         ReactiveFormsModule,
         UiModule,
-        OrdersRoutingModule
+        OrdersRoutingModule,
+        UsersModule
     ],
     declarations: [
         CartIconComponent,
