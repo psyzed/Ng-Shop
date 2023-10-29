@@ -10,10 +10,6 @@ export interface UsersState {
     isAuthenticated: boolean;
 }
 
-export interface UsersPartialState {
-    readonly [USERS_FEATURE_KEY]: UsersState;
-}
-
 export const initialUsersState: UsersState = {
     user: {} as User,
     isAuthenticated: false
