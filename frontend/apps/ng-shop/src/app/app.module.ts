@@ -29,11 +29,11 @@ import { environment } from '@env/environment';
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        StoreModule.forRoot({}),
-        EffectsModule.forRoot([]),
         UiModule,
         OrdersModule,
         ProductsModule,
+        StoreModule.forRoot({}),
+        EffectsModule.forRoot([]),
         RouterModule.forRoot(appRoutes, {
             initialNavigation: 'enabledBlocking'
         }),

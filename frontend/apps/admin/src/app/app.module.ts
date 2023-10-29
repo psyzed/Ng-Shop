@@ -20,6 +20,10 @@ import { UsersFormComponent } from './pages/users/users-form/users-form.componen
 import { OrdersListComponent } from './pages/orders/orders-list/orders-list.component';
 import { OrdersDetailComponent } from './pages/orders/orders-detail/orders-detail.component';
 import { JwtInterceptor, UsersModule } from '@frontend/users';
+import { environment } from '@env/environment';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
     declarations: [
@@ -44,7 +48,11 @@ import { JwtInterceptor, UsersModule } from '@frontend/users';
         HttpClientModule,
         UiModule,
         UsersModule,
-        RoutingModule
+        RoutingModule,
+        StoreModule.forRoot({}),
+        EffectsModule.forRoot([]),
+
+        !environment.production ? StoreDevtoolsModule.instrument() : []
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
