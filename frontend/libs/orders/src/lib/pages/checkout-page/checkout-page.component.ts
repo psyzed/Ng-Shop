@@ -4,9 +4,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User, UsersService } from '@frontend/users';
 import { OrderItem } from '../../models/order-item.model';
-import { Order } from '../../models/order.model';
-import { CartService, OrdersService } from '@frontend/orders';
-import { Subject, take, takeUntil } from 'rxjs';
+import { CartService, Order, OrdersService } from '@frontend/orders';
+import { Subject, filter, switchMap, take, takeUntil } from 'rxjs';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
@@ -23,7 +22,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     public shippingCosts: number = 0;
     public totalOrderPrice = 0;
     public orderItems: OrderItem[] = [];
-    public user: User = {} as User;
+    public user: User = null as any;
 
     private destroyed$ = new Subject<void>();
 
@@ -71,6 +70,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
                 quantity: item.quantity
             };
         });
+
         const order: Order = {
             orderItems: orderItems,
             shippingAddress1: this.userFormControls['street'].value,
@@ -83,29 +83,19 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
             user: this.user,
             dateOrdered: Date.now().toString()
         };
+        this._ordersService.cacheOrderData(order);
+
         this._ordersService
-            .createOrder(order)
-            .pipe(take(1))
-            .subscribe(
-                (order) => {
-                    this._confirmationService.confirm({
-                        message: 'We have received your order successfully',
-                        header: 'Thank you!',
-                        icon: 'pi pi-check',
-                        accept: () => {
-                            this._cartService.resetCart();
-                            this._router.navigate(['/']);
-                        }
-                    });
-                },
-                (error) => {
-                    this._toastMessageService.add({
-                        severity: 'error',
-                        summary: 'Error',
-                        detail: 'Order was not created, please try again later'
-                    });
-                }
-            );
+            .createCheckoutSession(this.orderItems)
+            .pipe(
+                take(1),
+                switchMap((sessionId) => {
+                    return this._ordersService.redirectToCheckout(sessionId);
+                })
+            )
+            .subscribe((error) => {
+                console.log(error);
+            });
     }
 
     private _getCountries(): void {
@@ -130,7 +120,10 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     private _fillOrderForm(): void {
         this._userService
             .getCurrentUser()
-            .pipe(takeUntil(this.destroyed$))
+            .pipe(
+                takeUntil(this.destroyed$),
+                filter((user) => Object.keys(user).length > 0)
+            )
             .subscribe((user) => {
                 if (user) {
                     this.user = user;

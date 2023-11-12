@@ -8,11 +8,17 @@ import {
     OrderApiResponse
 } from '../models/order.model';
 import { ApiResponse, Product } from '@frontend/products';
+import { OrderItem } from '../models/order-item.model';
+import { StripeService } from 'ngx-stripe';
+import { StripeError } from '@stripe/stripe-js';
 
 @Injectable({ providedIn: 'root' })
 export class OrdersService {
     private _apiURLOrders = `${environment.apiURL}orders`;
-    constructor(private http: HttpClient) {}
+    constructor(
+        private http: HttpClient,
+        private stripeService: StripeService
+    ) {}
 
     getOrders(): Observable<Order[]> {
         return this.http.get<Order[]>(this._apiURLOrders);
@@ -59,5 +65,33 @@ export class OrdersService {
             `${environment.apiURL}products/getProductsByIds`,
             { ids: productIds }
         );
+    }
+
+    createCheckoutSession(orderItems: OrderItem[]): Observable<string> {
+        return this.http.post<string>(
+            `${this._apiURLOrders}/create-checkout-session`,
+            orderItems
+        );
+    }
+
+    redirectToCheckout(sessionId: string): Observable<{ error: StripeError }> {
+        return this.stripeService.redirectToCheckout({ sessionId });
+    }
+
+    cacheOrderData(order: Order): void {
+        localStorage.setItem('orderData', JSON.stringify(order));
+    }
+
+    getCachedOrderData(): Order | null {
+        const orderData = localStorage.getItem('orderData');
+        if (orderData) {
+            return JSON.parse(orderData);
+        } else {
+            return null;
+        }
+    }
+
+    removeCachedOrderData(): void {
+        localStorage.removeItem('orderData');
     }
 }

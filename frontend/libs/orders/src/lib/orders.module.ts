@@ -11,6 +11,8 @@ import { CartSummaryComponent } from './components/cart-summary/cart-summary.com
 import { CheckoutPageComponent } from './pages/checkout-page/checkout-page.component';
 import { UsersModule } from '@frontend/users';
 
+import { ThankYouPageComponent } from './pages/thank-you-page/thank-you-page.component';
+
 @NgModule({
     imports: [
         CommonModule,
@@ -25,7 +27,8 @@ import { UsersModule } from '@frontend/users';
         CartPageComponent,
         CartItemComponent,
         CartSummaryComponent,
-        CheckoutPageComponent
+        CheckoutPageComponent,
+        ThankYouPageComponent
     ],
     exports: [
         CartIconComponent,

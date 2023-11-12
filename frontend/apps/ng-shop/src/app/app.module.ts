@@ -17,6 +17,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from '@frontend/users';
+import { NgxStripeModule } from 'ngx-stripe';
 import { environment } from '@env/environment';
 @NgModule({
     declarations: [
@@ -32,6 +33,9 @@ import { environment } from '@env/environment';
         UiModule,
         OrdersModule,
         ProductsModule,
+        NgxStripeModule.forRoot(
+            'pk_test_51LB19UL8s2T2UvuTcFKvt2wd1WYSMTrwmnil2yAFop7c0iCbIhqg89neZcdmjFboUP6bmOAIZVEuJGZ5s52OYDrE00VVPxCRse'
+        ),
         StoreModule.forRoot({}),
         EffectsModule.forRoot([]),
         RouterModule.forRoot(appRoutes, {

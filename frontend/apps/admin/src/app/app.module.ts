@@ -24,6 +24,7 @@ import { environment } from '@env/environment';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { NgxStripeModule } from 'ngx-stripe';
 
 @NgModule({
     declarations: [
@@ -52,7 +53,10 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
         StoreModule.forRoot({}),
         EffectsModule.forRoot([]),
 
-        !environment.production ? StoreDevtoolsModule.instrument() : []
+        !environment.production ? StoreDevtoolsModule.instrument() : [],
+        NgxStripeModule.forRoot(
+            'pk_test_51LB19UL8s2T2UvuTcFKvt2wd1WYSMTrwmnil2yAFop7c0iCbIhqg89neZcdmjFboUP6bmOAIZVEuJGZ5s52OYDrE00VVPxCRse'
+        )
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
